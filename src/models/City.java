@@ -9,5 +9,6 @@ package models;
  * @author user
  */
 public class City {
+    private int id;
     
 }
