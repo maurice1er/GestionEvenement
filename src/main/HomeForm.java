@@ -21,7 +21,7 @@ public class HomeForm extends JFrame {
         initComponents();
         
         // set the title and other properties of the JFrame
-        setTitle("Event");
+        setTitle("Events - Home");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // setResizable(false); // prevent resizing beyond the maximum size
 
@@ -164,6 +164,11 @@ public class HomeForm extends JFrame {
         jButton1.setText("Se connecter");
         jButton1.setToolTipText("");
         jButton1.setBorder(null);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -356,16 +361,16 @@ public class HomeForm extends JFrame {
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 2, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel24.setText("jeu., mai 4, 18:30");
+        jLabel24.setText("lun., août 14, 09:00");
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel25.setText("Conference Hall - CCIAD • Dakar");
+        jLabel25.setText("Dakar • Dakar, plateau, Dakar");
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel26.setText("B2B Opportunity Forum 2023");
+        jLabel26.setText("Formation Marketing");
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel27.setText("7 abonnés");
+        jLabel27.setText("2 abonnés");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -439,6 +444,12 @@ public class HomeForm extends JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new LoginForm().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

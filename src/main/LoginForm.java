@@ -4,17 +4,30 @@
  */
 package main;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+
 /**
  *
  * @author user
  */
-public class LoginForm extends javax.swing.JFrame {
+public class LoginForm extends JFrame {
 
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
         initComponents();
+        
+        // set the title and other properties of the JFrame
+        setTitle("Events - Login");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // setResizable(false); // prevent resizing beyond the maximum size
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        pack();
+        setSize(screenSize.width,screenSize.height);
     }
 
     /**
