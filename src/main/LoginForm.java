@@ -4,7 +4,6 @@
  */
 package main;
 
-<<<<<<< HEAD
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,25 +11,22 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-=======
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
->>>>>>> origin/drey
 
 /**
  *
  * @author user
  */
-<<<<<<< HEAD
+
 public class LoginForm extends javax.swing.JFrame {
     
        Connection conn;
     PreparedStatement pst;
     ResultSet rs;
-=======
-public class LoginForm extends JFrame {
->>>>>>> origin/drey
+    
 
     /**
      * Creates new form LoginForm
