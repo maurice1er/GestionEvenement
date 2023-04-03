@@ -35,10 +35,11 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Evenements.findById", query = "SELECT e FROM Evenements e WHERE e.id = :id"),
     @NamedQuery(name = "Evenements.findByTitre", query = "SELECT e FROM Evenements e WHERE e.titre = :titre"),
     @NamedQuery(name = "Evenements.findByDateDebut", query = "SELECT e FROM Evenements e WHERE e.dateDebut = :dateDebut"),
-    @NamedQuery(name = "Evenements.findByDateFin", query = "SELECT e FROM Evenements e WHERE e.dateFin = :dateFin"),
-    @NamedQuery(name = "Evenements.findByDateCreation", query = "SELECT e FROM Evenements e WHERE e.dateCreation = :dateCreation"),
-    @NamedQuery(name = "Evenements.findByDateModification", query = "SELECT e FROM Evenements e WHERE e.dateModification = :dateModification")})
-public class Evenements implements Serializable {
+    // @NamedQuery(name = "Evenements.findByDateFin", query = "SELECT e FROM Evenements e WHERE e.dateFin = :dateFin"),
+    // @NamedQuery(name = "Evenements.findByDateCreation", query = "SELECT e FROM Evenements e WHERE e.dateCreation = :dateCreation"),
+    // @NamedQuery(name = "Evenements.findByDateModification", query = "SELECT e FROM Evenements e WHERE e.dateModification = :dateModification")
+})
+public class Evenement implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,22 +70,22 @@ public class Evenements implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateModification;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evenementId")
-    private Collection<Inscriptions> inscriptionsCollection;
+    private Collection<Inscription> inscriptionsCollection;
     @JoinColumn(name = "adresse_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Adresses adresseId;
+    private Adresse adresseId;
     @JoinColumn(name = "organisateur_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Utilisateurs organisateurId;
+    private Utilisateur organisateurId;
 
-    public Evenements() {
+    public Evenement() {
     }
 
-    public Evenements(Integer id) {
+    public Evenement(Integer id) {
         this.id = id;
     }
 
-    public Evenements(Integer id, String titre, String description, Date dateDebut, Date dateFin, Date dateCreation) {
+    public Evenement(Integer id, String titre, String description, Date dateDebut, Date dateFin, Date dateCreation) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -149,27 +150,27 @@ public class Evenements implements Serializable {
         this.dateModification = dateModification;
     }
 
-    public Collection<Inscriptions> getInscriptionsCollection() {
+    public Collection<Inscription> getInscriptionsCollection() {
         return inscriptionsCollection;
     }
 
-    public void setInscriptionsCollection(Collection<Inscriptions> inscriptionsCollection) {
+    public void setInscriptionsCollection(Collection<Inscription> inscriptionsCollection) {
         this.inscriptionsCollection = inscriptionsCollection;
     }
 
-    public Adresses getAdresseId() {
+    public Adresse getAdresseId() {
         return adresseId;
     }
 
-    public void setAdresseId(Adresses adresseId) {
+    public void setAdresseId(Adresse adresseId) {
         this.adresseId = adresseId;
     }
 
-    public Utilisateurs getOrganisateurId() {
+    public Utilisateur getOrganisateurId() {
         return organisateurId;
     }
 
-    public void setOrganisateurId(Utilisateurs organisateurId) {
+    public void setOrganisateurId(Utilisateur organisateurId) {
         this.organisateurId = organisateurId;
     }
 
@@ -183,10 +184,10 @@ public class Evenements implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Evenements)) {
+        if (!(object instanceof Evenement)) {
             return false;
         }
-        Evenements other = (Evenements) object;
+        Evenement other = (Evenement) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
