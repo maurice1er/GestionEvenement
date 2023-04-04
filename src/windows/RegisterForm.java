@@ -2,22 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package main;
+package windows;
 
+import daos.IUtilisateur;
 import java.util.Arrays;
 import java.util.List;
+import models.Utilisateurs;
+import services.UtilisateurService;
 
 /**
  *
- * @author user 
+ * @author user
  */
 public class RegisterForm extends javax.swing.JFrame {
 
     /**
      * Creates new form InscriptionForm
      */
+    IUtilisateur iu = new UtilisateurService();
+
     public RegisterForm() {
         initComponents();
+        for (Utilisateurs u : iu.allUsers()) {
+            System.out.println(u);
+            System.out.println("");
+        }
+
     }
 
     /**
@@ -179,12 +189,12 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_email_txtActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     String[] indicatifs = {"77","78","70","76","75","72"};
-        List<String> listeindicatifs = Arrays.asList(indicatifs); 
- // Redirect to login
-                LoginForm lf = new LoginForm();
-                lf.setVisible(true);
-                this.setVisible(false);        
+        String[] indicatifs = {"77", "78", "70", "76", "75", "72"};
+        List<String> listeindicatifs = Arrays.asList(indicatifs);
+        // Redirect to login
+        LoginForm lf = new LoginForm();
+        lf.setVisible(true);
+        this.setVisible(false);
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

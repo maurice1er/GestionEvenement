@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "utilisateurs")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Utilisateurs.findAll", query = "SELECT u FROM Utilisateurs u")
+    @NamedQuery(name = "Utilisateurs.login", query = "SELECT u FROM Utilisateurs u WHERE u.email = :email AND u.motDePasse = :motDePasse")
+   ,@NamedQuery(name = "Utilisateurs.findAll", query = "SELECT u FROM Utilisateurs u")
     , @NamedQuery(name = "Utilisateurs.findById", query = "SELECT u FROM Utilisateurs u WHERE u.id = :id")
     , @NamedQuery(name = "Utilisateurs.findByNom", query = "SELECT u FROM Utilisateurs u WHERE u.nom = :nom")
     , @NamedQuery(name = "Utilisateurs.findByPrenom", query = "SELECT u FROM Utilisateurs u WHERE u.prenom = :prenom")
@@ -59,16 +60,16 @@ public class Utilisateurs implements Serializable {
     @Column(name = "telephone")
     private String telephone;
     @Basic(optional = false)
-    @Column(name = "mot_de_passe")
+    @Column(name = "motDePasse")
     private String motDePasse;
     @Basic(optional = false)
     @Column(name = "role")
     private String role;
     @Basic(optional = false)
-    @Column(name = "date_creation")
+    @Column(name = "dateCreation")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
-    @Column(name = "date_modification")
+    @Column(name = "dateModification")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateModification;
 
@@ -186,5 +187,5 @@ public class Utilisateurs implements Serializable {
     public String toString() {
         return "models.Utilisateurs[ id=" + id + " ]";
     }
-    
+
 }
