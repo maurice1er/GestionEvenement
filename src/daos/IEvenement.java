@@ -5,17 +5,18 @@
 package daos;
 
 import java.util.List;
-import models.Evenement;
+import models.Evenements;
 
 /**
  *
  * @author user
  */
 public interface IEvenement {
-    List<Evenement> allEvents();
-    Evenement addEvent(Evenement p);
-    Evenement getEventByTitle(String title);
-    Evenement updateEvent(int id, Evenement e);
+    List<Evenements> allEvents();
+    Evenements addEvent(Evenements p);
+    Evenements getEventByTitle(String title);
+    Evenements updateEvent(int id, Evenements e);
     void deleteEventById(int id);
+    int countUserByEvenementId(int eventId);
     
 }

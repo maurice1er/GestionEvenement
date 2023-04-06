@@ -6,7 +6,19 @@ package models;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -18,7 +30,7 @@ import javax.persistence.*;
     @NamedQuery(name = "Inscriptions.findAll", query = "SELECT i FROM Inscriptions i"),
     @NamedQuery(name = "Inscriptions.findById", query = "SELECT i FROM Inscriptions i WHERE i.id = :id"),
     @NamedQuery(name = "Inscriptions.findByDateInscription", query = "SELECT i FROM Inscriptions i WHERE i.dateInscription = :dateInscription")})
-public class Inscription implements Serializable {
+public class Inscriptions implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,24 +39,24 @@ public class Inscription implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "date_inscription")
+    @Column(name = "dateInscription")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateInscription;
-    @JoinColumn(name = "evenement_id", referencedColumnName = "id")
+    @JoinColumn(name = "evenementId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Evenement evenementId;
-    @JoinColumn(name = "participant_id", referencedColumnName = "id")
+    private Evenements evenementId;
+    @JoinColumn(name = "participantId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Utilisateur participantId;
+    private Utilisateurs participantId;
 
-    public Inscription() {
+    public Inscriptions() {
     }
 
-    public Inscription(Integer id) {
+    public Inscriptions(Integer id) {
         this.id = id;
     }
 
-    public Inscription(Integer id, Date dateInscription) {
+    public Inscriptions(Integer id, Date dateInscription) {
         this.id = id;
         this.dateInscription = dateInscription;
     }
@@ -65,19 +77,19 @@ public class Inscription implements Serializable {
         this.dateInscription = dateInscription;
     }
 
-    public Evenement getEvenementId() {
+    public Evenements getEvenementId() {
         return evenementId;
     }
 
-    public void setEvenementId(Evenement evenementId) {
+    public void setEvenementId(Evenements evenementId) {
         this.evenementId = evenementId;
     }
 
-    public Utilisateur getParticipantId() {
+    public Utilisateurs getParticipantId() {
         return participantId;
     }
 
-    public void setParticipantId(Utilisateur participantId) {
+    public void setParticipantId(Utilisateurs participantId) {
         this.participantId = participantId;
     }
 
@@ -91,10 +103,10 @@ public class Inscription implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Inscription)) {
+        if (!(object instanceof Inscriptions)) {
             return false;
         }
-        Inscription other = (Inscription) object;
+        Inscriptions other = (Inscriptions) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

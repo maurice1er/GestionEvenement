@@ -31,16 +31,16 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "evenements")
 @NamedQueries({
+    @NamedQuery(name = "Evenements.countUserByEvent", query = "SELECT COUNT(i.id) as nbInscrit FROM Evenements e JOIN Inscriptions i ON i.evenementId = e.id WHERE e.id = :nbIns GROUP BY e.id"),
     @NamedQuery(name = "Evenements.findAll", query = "SELECT e FROM Evenements e"),
     @NamedQuery(name = "Evenements.findById", query = "SELECT e FROM Evenements e WHERE e.id = :id"),
     @NamedQuery(name = "Evenements.findByTitre", query = "SELECT e FROM Evenements e WHERE e.titre = :titre"),
     @NamedQuery(name = "Evenements.findByDateDebut", query = "SELECT e FROM Evenements e WHERE e.dateDebut = :dateDebut"),
-    // @NamedQuery(name = "Evenements.findByDateFin", query = "SELECT e FROM Evenements e WHERE e.dateFin = :dateFin"),
-    // @NamedQuery(name = "Evenements.findByDateCreation", query = "SELECT e FROM Evenements e WHERE e.dateCreation = :dateCreation"),
-    // @NamedQuery(name = "Evenements.findByDateModification", query = "SELECT e FROM Evenements e WHERE e.dateModification = :dateModification")
-})
-public class Evenement implements Serializable {
-
+    @NamedQuery(name = "Evenements.findByDateFin", query = "SELECT e FROM Evenements e WHERE e.dateFin = :dateFin"),
+    @NamedQuery(name = "Evenements.findByDateCreation", query = "SELECT e FROM Evenements e WHERE e.dateCreation = :dateCreation"),
+    @NamedQuery(name = "Evenements.findByDateModification", query = "SELECT e FROM Evenements e WHERE e.dateModification = :dateModification")})
+public class Evenements implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,37 +55,37 @@ public class Evenement implements Serializable {
     @Column(name = "description")
     private String description;
     @Basic(optional = false)
-    @Column(name = "date_debut")
+    @Column(name = "dateDebut")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateDebut;
     @Basic(optional = false)
-    @Column(name = "date_fin")
+    @Column(name = "dateFin")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateFin;
     @Basic(optional = false)
-    @Column(name = "date_creation")
+    @Column(name = "dateCreation")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation;
-    @Column(name = "date_modification")
+    @Column(name = "dateModification")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateModification;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evenementId")
-    private Collection<Inscription> inscriptionsCollection;
-    @JoinColumn(name = "adresse_id", referencedColumnName = "id")
+    private Collection<Inscriptions> inscriptionsCollection;
+    @JoinColumn(name = "adresseId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Adresse adresseId;
-    @JoinColumn(name = "organisateur_id", referencedColumnName = "id")
+    private Adresses adresseId;
+    @JoinColumn(name = "organisateurId", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Utilisateur organisateurId;
+    private Utilisateurs organisateurId;
 
-    public Evenement() {
+    public Evenements() {
     }
 
-    public Evenement(Integer id) {
+    public Evenements(Integer id) {
         this.id = id;
     }
 
-    public Evenement(Integer id, String titre, String description, Date dateDebut, Date dateFin, Date dateCreation) {
+    public Evenements(Integer id, String titre, String description, Date dateDebut, Date dateFin, Date dateCreation) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -150,27 +150,27 @@ public class Evenement implements Serializable {
         this.dateModification = dateModification;
     }
 
-    public Collection<Inscription> getInscriptionsCollection() {
+    public Collection<Inscriptions> getInscriptionsCollection() {
         return inscriptionsCollection;
     }
 
-    public void setInscriptionsCollection(Collection<Inscription> inscriptionsCollection) {
+    public void setInscriptionsCollection(Collection<Inscriptions> inscriptionsCollection) {
         this.inscriptionsCollection = inscriptionsCollection;
     }
 
-    public Adresse getAdresseId() {
+    public Adresses getAdresseId() {
         return adresseId;
     }
 
-    public void setAdresseId(Adresse adresseId) {
+    public void setAdresseId(Adresses adresseId) {
         this.adresseId = adresseId;
     }
 
-    public Utilisateur getOrganisateurId() {
+    public Utilisateurs getOrganisateurId() {
         return organisateurId;
     }
 
-    public void setOrganisateurId(Utilisateur organisateurId) {
+    public void setOrganisateurId(Utilisateurs organisateurId) {
         this.organisateurId = organisateurId;
     }
 
@@ -184,10 +184,10 @@ public class Evenement implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Evenement)) {
+        if (!(object instanceof Evenements)) {
             return false;
         }
-        Evenement other = (Evenement) object;
+        Evenements other = (Evenements) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -196,7 +196,9 @@ public class Evenement implements Serializable {
 
     @Override
     public String toString() {
-        return "models.Evenements[ id=" + id + " ]";
+        return "Evenements{" + "id=" + id + ", titre=" + titre + ", description=" + description + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", dateCreation=" + dateCreation + ", dateModification=" + dateModification + ", inscriptionsCollection=" + inscriptionsCollection + ", adresseId=" + adresseId + ", organisateurId=" + organisateurId + '}';
     }
+
+    
     
 }

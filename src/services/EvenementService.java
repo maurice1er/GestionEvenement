@@ -7,7 +7,10 @@ package services;
 import daos.IEvenement;
 import java.util.List;
 import javax.persistence.EntityManager;
-import models.Evenement;
+import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
+import models.Evenements;
+import utils.EntityManagerUtil;
 
 /**
  *
@@ -16,28 +19,37 @@ import models.Evenement;
 public class EvenementService implements IEvenement {
 
     private EntityManager entityManager = null;
-    
-    public EvenementService(){
+
+    public EvenementService() {
         entityManager = EntityManagerUtil.getEntityManagerFactory().createEntityManager();
     }
-    
+
     @Override
-    public List<Evenement> allEvents() {
+    public List<Evenements> allEvents() {
+        List<Evenements> evenementList;
+
+        try {
+            evenementList = entityManager.createNamedQuery("Evenements.findAll", Evenements.class).getResultList();
+        } catch (PersistenceException ex) {
+            System.err.println("Erreur lors de la récupération des produits " + ex.getMessage());
+            throw ex;
+        }
+        // Retour de la liste de tous les produits
+        return evenementList;
+    }
+
+    @Override
+    public Evenements addEvent(Evenements p) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Evenement addEvent(Evenement p) {
+    public Evenements getEventByTitle(String title) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Evenement getEventByTitle(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Evenement updateEvent(int id, Evenement e) {
+    public Evenements updateEvent(int id, Evenements e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -45,5 +57,20 @@ public class EvenementService implements IEvenement {
     public void deleteEventById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+    @Override
+    public int countUserByEvenementId(int nbIns) {
+        int nbInscrit = 0;
+        /*try {
+            System.out.println(entityManager.createNamedQuery("Evenements.countUserByEvent", Evenements.class)
+                    .setParameter("id", nbIns));
+            nbInscrit = entityManager.createNamedQuery("Evenements.countUserByEvent", Integer.class)
+                    .setParameter("id", nbIns).getSingleResult();
+        } catch (PersistenceException ex) {
+            System.err.println("Erreur lors de la récupération des produits " + ex.getMessage());
+            throw ex;
+        }*/
+        // Retour du nombre d'inscrits à l'événement
+        return nbInscrit;
+    }
 }

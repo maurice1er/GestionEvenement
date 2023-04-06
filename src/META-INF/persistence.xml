@@ -8,12 +8,16 @@
     <class>models.Villes</class>
     <class>models.Utilisateurs</class>
     <class>models.Inscription</class>
-    <class>models.Evenement</class>
+    <class>models.Ville</class>
+    <class>models.Adresse</class>
+    <class>models.Utilisateur</class>
+    <class>models.Evenements</class>
+    <class>models.Inscriptions</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gevents?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.password" value="java"/>
     </properties>
   </persistence-unit>
 </persistence>
