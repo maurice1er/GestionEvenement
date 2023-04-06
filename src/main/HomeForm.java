@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import models.Evenements;
@@ -421,12 +422,21 @@ public class HomeForm extends JFrame {
 
             System.out.println("Id=" + evenement.getId());
             int nbIns = ie.countUserByEvenementId(evenement.getId());
-            //JLabel nbInscritLabel = new JLabel(nbIns + " inscrits");
-            //nbInscritLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            // eventPanel.add(nbInscritLabel);
+            JLabel nbInscritLabel = new JLabel(nbIns + " inscrits");
+            nbInscritLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            eventPanel.add(nbInscritLabel);
             eventPanel.add(new JLabel(""));
             
             panel.add(eventPanel);
+            
+            if (evenements.indexOf(evenement) == evenements.size() - 1){
+                JPanel panelBreak = new JPanel();
+                panelBreak.setLayout(new GridLayout(1, 1, 20, 10));
+                panelBreak.add(new JLabel("<html><br></html>bnnnnnnnnnnnnnnnnnn"));
+                panel.add(panelBreak);
+                System.out.println("-------------------");
+                
+            }
         }
 
         myJScroll.setViewportView(panel);

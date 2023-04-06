@@ -8,6 +8,7 @@ import daos.IEvenement;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import models.Evenements;
 import utils.EntityManagerUtil;
@@ -59,18 +60,20 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public int countUserByEvenementId(int nbIns) {
+    public int countUserByEvenementId(int eventId) {
         int nbInscrit = 0;
-        /*try {
-            System.out.println(entityManager.createNamedQuery("Evenements.countUserByEvent", Evenements.class)
-                    .setParameter("id", nbIns));
-            nbInscrit = entityManager.createNamedQuery("Evenements.countUserByEvent", Integer.class)
-                    .setParameter("id", nbIns).getSingleResult();
+        try {
+            TypedQuery<Long> query = entityManager.createNamedQuery("Evenements.countUserByEventId", Long.class);
+            query.setParameter("eventId", eventId);
+            
+            Long _nbInscrit = query.getSingleResult();
+            nbInscrit = _nbInscrit.intValue();            
         } catch (PersistenceException ex) {
             System.err.println("Erreur lors de la récupération des produits " + ex.getMessage());
             throw ex;
-        }*/
+        }
         // Retour du nombre d'inscrits à l'événement
         return nbInscrit;
     }
 }
+
