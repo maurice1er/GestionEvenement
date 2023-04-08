@@ -46,7 +46,17 @@ public class EvenementService implements IEvenement {
 
     @Override
     public Evenements getEventByTitle(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Evenements events = null;
+        try {
+            TypedQuery<Evenements> query = entityManager.createNamedQuery("Evenements.findByTitre", Evenements.class);
+            query.setParameter("titre", title);
+            
+            events = query.getSingleResult();          
+        } catch (PersistenceException ex) {
+            System.err.println("Erreur lors de la récupération de l'events " + ex.getMessage());
+            throw ex;
+        }
+        return events;
     }
 
     @Override
