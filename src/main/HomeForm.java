@@ -40,7 +40,8 @@ import services.EvenementService;
  * @author user
  */
 public class HomeForm extends JFrame {
-
+    
+    private Layout _layout = new Layout();
     IEvenement ie = new EvenementService();
     private List<Evenements> evenements;
 
@@ -60,7 +61,7 @@ public class HomeForm extends JFrame {
         setSize(screenSize.width, screenSize.height);
 
         evenements = ie.allEvents();
-        afficherEvenements(evenements,4);
+        afficherEvenements(evenements, 4);
 
 
         /*IEvenement ie = new EvenementService();
@@ -68,7 +69,7 @@ public class HomeForm extends JFrame {
         for(Evenements e : ie.allEvents()){
             System.out.println(e);
         }
-        */
+         */
         Layout layout = new Layout();
         layout.loadCombo(ie.allEvents(), jfPaysCombo, "titre");
     }
@@ -374,10 +375,11 @@ public class HomeForm extends JFrame {
             }
         });
     }
-    
-            
+
+    JPanel panel = new JPanel();
+
     public void afficherEvenements(List<Evenements> evenements, int nbColumn) {
-        JPanel panel = new JPanel();
+
         panel.setLayout(new GridLayout(0, nbColumn, 20, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
 
@@ -389,34 +391,46 @@ public class HomeForm extends JFrame {
                 public void mouseClicked(MouseEvent e) {
                     System.out.println("ID de l'événement : " + evenement.getId());
                 }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    try {
+                        Thread.sleep(200);
+                        eventPanel.setBackground(eventPanel.getBackground().darker());
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    eventPanel.setBackground(eventPanel.getBackground().brighter());
+                }
             });
             eventPanel.setLayout(new BoxLayout(eventPanel, BoxLayout.Y_AXIS));
 
             // Générer une couleur de fond aléatoire pour chaque événement
             Color bgColor = new Color((int) (Math.random() * 0x1000000));
             eventPanel.setBackground(bgColor);
-            
-            
+
             JLabel imageLabel = new JLabel();
             ImageIcon imageIcon = new ImageIcon(getClass().getResource("/main/images/image4.png"));
             Image image = imageIcon.getImage();
-            
-            int labelWidth = eventPanel.getPreferredSize().width*100/nbColumn;
+
+            int labelWidth = eventPanel.getPreferredSize().width * 100 / nbColumn;
             int labelHeight = 130;
-            
-            
-            Image scaledImage = image.getScaledInstance(labelWidth+50, labelHeight, Image.SCALE_FAST);
+
+            Image scaledImage = image.getScaledInstance(labelWidth + 50, labelHeight, Image.SCALE_FAST);
             ImageIcon scaledImageIcon = new ImageIcon(scaledImage);
             imageLabel.setIcon(scaledImageIcon);
             imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             eventPanel.add(imageLabel);
-            
-                   
+
             JLabel titreLabel = new JLabel(evenement.getTitre());
             titreLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             eventPanel.add(titreLabel);
 
-            JLabel dateDebutLabel = new JLabel(evenement.getDateDebut().toString());
+            JLabel dateDebutLabel = new JLabel(_layout.formatDate(evenement.getDateDebut().toString()));
             dateDebutLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             eventPanel.add(dateDebutLabel);
 
@@ -426,23 +440,21 @@ public class HomeForm extends JFrame {
             nbInscritLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             eventPanel.add(nbInscritLabel);
             eventPanel.add(new JLabel(""));
-            
+
             panel.add(eventPanel);
-            
-            if (evenements.indexOf(evenement) == evenements.size() - 1){
+
+            /*if (evenements.indexOf(evenement) == evenements.size() - 1){
                 JPanel panelBreak = new JPanel();
                 panelBreak.setLayout(new GridLayout(1, 1, 20, 10));
-                panelBreak.add(new JLabel("<html><br></html>bnnnnnnnnnnnnnnnnnn"));
                 panel.add(panelBreak);
-                System.out.println("-------------------");
-                
-            }
+                System.out.println("-----"); 
+            }*/
         }
 
         myJScroll.setViewportView(panel);
     }
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreateEvent;
     private javax.swing.JButton btnLogin;

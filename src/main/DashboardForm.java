@@ -4,9 +4,42 @@
  */
 package main;
 
+import daos.IEvenement;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import models.Evenements;
+import models.Utilisateurs;
+import services.EvenementService;
 
 /**
  *
@@ -14,12 +47,18 @@ import javax.swing.JFrame;
  */
 public class DashboardForm extends javax.swing.JFrame {
 
+    private Layout _layout = new Layout();
+    IEvenement ie = new EvenementService();
+    // IUtilisateur ie = new UtilisateurService();
+
+    HashMap<String, List<List>> _data = new HashMap<>();
+
     /**
      * Creates new form DashboardForm
      */
     public DashboardForm() {
         initComponents();
-        
+
         // set the title and other properties of the JFrame
         setTitle("Events - Dashboard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +67,11 @@ public class DashboardForm extends javax.swing.JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         pack();
         setSize(screenSize.width, screenSize.height);
+
+        handlePanelBoxContent(jfPageTitle, "RESUME", jfPanelBox);
+        if (jfBtnResume.isEnabled() == true) {
+            jfBtnResume.setEnabled(false);
+        }
     }
 
     /**
@@ -40,47 +84,53 @@ public class DashboardForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        wfHello = new javax.swing.JLabel();
-        jfList = new javax.swing.JButton();
-        jfAdd = new javax.swing.JButton();
+        jfPageTitle = new javax.swing.JLabel();
+        jfBtnListEvent = new javax.swing.JButton();
+        jfBtnAddEvent = new javax.swing.JButton();
         panelBox = new javax.swing.JPanel();
         jfSearchBar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        btnRegister = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        wfWrite = new javax.swing.JLabel();
+        btnLogout = new javax.swing.JButton();
+        jfPanelBox = new javax.swing.JPanel();
+        jfBtnResume = new javax.swing.JButton();
+        jfBtnListUser = new javax.swing.JButton();
+        jfBtnAddUser = new javax.swing.JButton();
+        jfBtnLougout2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        wfHello.setText("Welcome Frida");
+        jPanel1.setBackground(new java.awt.Color(204, 255, 153));
+
+        jfPageTitle.setText("ADD EVENT");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(wfHello)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jfPageTitle)
+                .addContainerGap(981, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(wfHello)
-                .addGap(0, 24, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jfPageTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jfList.setText("LIST EVENT");
-        jfList.addActionListener(new java.awt.event.ActionListener() {
+        jfBtnListEvent.setText("LIST EVENTS");
+        jfBtnListEvent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jfListActionPerformed(evt);
+                jfBtnListEventActionPerformed(evt);
             }
         });
 
-        jfAdd.setText("ADD EVENT");
-        jfAdd.addActionListener(new java.awt.event.ActionListener() {
+        jfBtnAddEvent.setText("ADD EVENT");
+        jfBtnAddEvent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jfAddActionPerformed(evt);
+                jfBtnAddEventActionPerformed(evt);
             }
         });
 
@@ -98,15 +148,15 @@ public class DashboardForm extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 51, 51));
         jLabel5.setText("Events");
 
-        btnRegister.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnRegister.setForeground(new java.awt.Color(255, 51, 51));
-        btnRegister.setText("Deconnexion");
-        btnRegister.setBorder(null);
-        btnRegister.setBorderPainted(false);
-        btnRegister.setContentAreaFilled(false);
-        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(255, 51, 51));
+        btnLogout.setText("Deconnexion");
+        btnLogout.setBorder(null);
+        btnLogout.setBorderPainted(false);
+        btnLogout.setContentAreaFilled(false);
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegisterActionPerformed(evt);
+                btnLogoutActionPerformed(evt);
             }
         });
 
@@ -120,7 +170,7 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGap(73, 73, 73)
                 .addComponent(jfSearchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 707, Short.MAX_VALUE)
-                .addComponent(btnRegister)
+                .addComponent(btnLogout)
                 .addGap(71, 71, 71))
         );
         panelBoxLayout.setVerticalGroup(
@@ -130,45 +180,72 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGroup(panelBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jfSearchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRegister))
+                        .addComponent(btnLogout))
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        wfWrite.setText("Home");
+        javax.swing.GroupLayout jfPanelBoxLayout = new javax.swing.GroupLayout(jfPanelBox);
+        jfPanelBox.setLayout(jfPanelBoxLayout);
+        jfPanelBoxLayout.setHorizontalGroup(
+            jfPanelBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jfPanelBoxLayout.setVerticalGroup(
+            jfPanelBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 232, Short.MAX_VALUE)
+        );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(wfWrite)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(wfWrite)
-                .addContainerGap(191, Short.MAX_VALUE))
-        );
+        jfBtnResume.setText("DASHBOARD");
+        jfBtnResume.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfBtnResumeActionPerformed(evt);
+            }
+        });
+
+        jfBtnListUser.setText("LIST USERS");
+        jfBtnListUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfBtnListUserActionPerformed(evt);
+            }
+        });
+
+        jfBtnAddUser.setText("ADD USER");
+        jfBtnAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfBtnAddUserActionPerformed(evt);
+            }
+        });
+
+        jfBtnLougout2.setText("Deconnexion");
+        jfBtnLougout2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfBtnLougout2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 30, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jfAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jfList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(panelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jfBtnLougout2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jfBtnResume, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jfBtnAddEvent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jfBtnListEvent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jfBtnListUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jfBtnAddUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jfPanelBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,38 +254,275 @@ public class DashboardForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jfAdd)
+                        .addComponent(jfBtnResume)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jfList))
+                        .addComponent(jfBtnAddEvent)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfBtnListEvent)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfBtnListUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfBtnAddUser))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(204, Short.MAX_VALUE))
+                        .addComponent(jfPanelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addComponent(jfBtnLougout2)
+                .addGap(45, 45, 45))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jfListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfListActionPerformed
+    private void jfBtnListEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnListEventActionPerformed
         // TODO add your handling code here:
-        wfHello.setText("LIST");
-    }//GEN-LAST:event_jfListActionPerformed
+        handlePanelBoxContent(jfPageTitle, "LIST EVENTS", jfPanelBox);
+        if (jfBtnListEvent.isEnabled() == true) {
+            jfBtnListEvent.setEnabled(false);
 
-    private void jfAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfAddActionPerformed
+            jfBtnAddEvent.setEnabled(true);
+            jfBtnAddUser.setEnabled(true);
+            jfBtnResume.setEnabled(true);
+            jfBtnListUser.setEnabled(true);
+        }
+    }//GEN-LAST:event_jfBtnListEventActionPerformed
+
+    private void jfBtnAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnAddEventActionPerformed
         // TODO add your handling code here:
-        wfHello.setText("ADD");
-    }//GEN-LAST:event_jfAddActionPerformed
+        handlePanelBoxContent(jfPageTitle, "ADD EVENT", jfPanelBox);
+        if (jfBtnAddEvent.isEnabled() == true) {
+            jfBtnAddEvent.setEnabled(false);
+
+            jfBtnAddUser.setEnabled(true);
+            jfBtnListUser.setEnabled(true);
+            jfBtnListEvent.setEnabled(true);
+            jfBtnResume.setEnabled(true);
+        }
+    }//GEN-LAST:event_jfBtnAddEventActionPerformed
 
     private void jfSearchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfSearchBarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jfSearchBarActionPerformed
 
-    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
         new HomeForm().setVisible(true);
-    }//GEN-LAST:event_btnRegisterActionPerformed
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void jfBtnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnAddUserActionPerformed
+        // TODO add your handling code here:
+        handlePanelBoxContent(jfPageTitle, "ADD USER", jfPanelBox);
+        if (jfBtnAddUser.isEnabled() == true) {
+            jfBtnAddUser.setEnabled(false);
+
+            jfBtnAddEvent.setEnabled(true);
+            jfBtnListUser.setEnabled(true);
+            jfBtnListEvent.setEnabled(true);
+            jfBtnResume.setEnabled(true);
+        }
+    }//GEN-LAST:event_jfBtnAddUserActionPerformed
+
+    private void jfBtnResumeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnResumeActionPerformed
+        // TODO add your handling code here:
+        if (jfBtnResume.isEnabled() == true) {
+            jfBtnResume.setEnabled(false);
+
+            jfBtnAddEvent.setEnabled(true);
+            jfBtnAddUser.setEnabled(true);
+            jfBtnListEvent.setEnabled(true);
+            jfBtnListUser.setEnabled(true);
+        }
+        handlePanelBoxContent(jfPageTitle, "RESUME", jfPanelBox);
+    }//GEN-LAST:event_jfBtnResumeActionPerformed
+
+    private void jfBtnListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnListUserActionPerformed
+        // TODO add your handling code here:
+        handlePanelBoxContent(jfPageTitle, "LIST USERS", jfPanelBox);
+        if (jfBtnListUser.isEnabled() == true) {
+            jfBtnListUser.setEnabled(false);
+
+            jfBtnAddEvent.setEnabled(true);
+            jfBtnAddUser.setEnabled(true);
+            jfBtnListEvent.setEnabled(true);
+            jfBtnResume.setEnabled(true);
+        }
+    }//GEN-LAST:event_jfBtnListUserActionPerformed
+
+    private void jfBtnLougout2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnLougout2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new HomeForm().setVisible(true);
+    }//GEN-LAST:event_jfBtnLougout2ActionPerformed
+
+    public void handlePanelBoxContent(JLabel jLabel, String message, JPanel myPanel) {
+        clearPanel(myPanel);
+        jLabel.setText(message);
+
+        String labelValue = jLabel.getText();
+        // System.out.println(labelValue);
+
+        if (labelValue.contains("ADD") && labelValue.contains("EVENT")) {
+            System.out.println("Add event");
+        } else if (labelValue.contains("ADD") && labelValue.contains("USER")) {
+            System.out.println("Add user");
+        } else if (labelValue.contains("LIST") && labelValue.contains("EVENTS")) {
+            System.out.println("List events");
+            List<Evenements> events = ie.allEvents();
+            setEventsTable(events, myPanel);
+
+        } else if (labelValue.contains("LIST") && labelValue.contains("USERS")) {
+            System.out.println("List users");
+            List<Utilisateurs> users = null; // = iu.allUsers;
+            setUsersTable(users, myPanel);
+        } else {
+            System.out.println("RESUME dash");
+
+            HashMap<String, List> data = new HashMap<>();
+            data.put("events", ie.allEvents());
+
+
+            setResumeTable(data, myPanel);
+            jfBtnListEvent.setEnabled(true);
+        }
+    }
+
+    public void setEventsTable(List<Evenements> events, JPanel panel) {
+        clearPanel(panel);
+        JTable jTable = new JTable();
+
+        panel.setLayout(new GridLayout(1, 1, 20, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+        //Color bgColor = new Color((int) (Math.random() * 0x1000000));
+        //panel.setBackground(bgColor);
+
+        Vector<String> columns = new Vector<String>();
+        columns.add("Id");
+        columns.add("Organisateur");
+        columns.add("Téléphone");
+        columns.add("Titre");
+        columns.add("Description");
+        columns.add("Date de début");
+        columns.add("Date de fin");
+        columns.add("Nombre d'inscrit");
+
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+
+        if (events != null) {
+            for (Evenements event : events) {
+                Vector<Object> row = new Vector<Object>();
+                row.add(event.getId());
+                row.add(event.getOrganisateurId().getNom() + " " + event.getOrganisateurId().getPrenom());
+                row.add(event.getOrganisateurId().getTelephone());
+                row.add(event.getTitre());
+                row.add(event.getDescription());
+                row.add(_layout.formatDate(event.getDateDebut().toString()));
+                row.add(_layout.formatDate(event.getDateFin().toString()));
+                row.add(String.valueOf(event.getInscriptionsCollection().size()));
+
+                data.add(row);
+            }
+        }
+
+        // DefaultTableModel tableModel = new DefaultTableModel(data, columns);
+        DefaultTableModel tableModel = new DefaultTableModel(data, columns);
+        jTable.setModel(tableModel);
+
+        // Désactiver l'édition de toutes les cellules
+        jTable.setDefaultEditor(Object.class, null);
+
+        JScrollPane jScrollPane = new JScrollPane(jTable);
+        panel.add(jScrollPane);
+        //panel.add(jTable);
+    }
+
+    public void setUsersTable(List<Utilisateurs> users, JPanel panel) {
+        clearPanel(panel);
+        JTable jTable = new JTable();
+
+        panel.setLayout(new GridLayout(1, 1, 20, 10));
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+        //Color bgColor = new Color((int) (Math.random() * 0x1000000));
+        //panel.setBackground(bgColor);
+
+        Vector<String> columns = new Vector<String>();
+        columns.add("Id");
+        columns.add("Nom");
+        columns.add("Prenom");
+        columns.add("Email");
+        columns.add("Téléphone");
+        columns.add("Date d'inscription");
+
+        Vector<Vector<Object>> data = new Vector<Vector<Object>>();
+
+        if (users != null) {
+            for (Utilisateurs user : users) {
+
+                Vector<Object> row = new Vector<Object>();
+                row.add(user.getId());
+                row.add(user.getNom());
+                row.add(user.getPrenom());
+                row.add(user.getEmail());
+                row.add(user.getTelephone());
+                row.add(user.getDateCreation());
+                data.add(row);
+            }
+        }
+
+        DefaultTableModel tableModel = new DefaultTableModel(data, columns);
+        jTable.setModel(tableModel);
+
+        JScrollPane jScrollPane = new JScrollPane(jTable);
+        panel.add(jScrollPane);
+        //panel.add(jTable);
+    }
+
+    public void setResumeTable(HashMap<String, List> data, JPanel panel) {
+        clearPanel(panel); // clear panel
+        
+        // set border
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+        panel.setLayout(new GridLayout(0, 4, 10, 10));
+
+        // add stats value
+        HashMap<String, String> _data = new HashMap<>();
+        _data.put(ie.getEventByTitle("Foire agricole").getOrganisateurId().getTelephone(), "phone");
+        _data.put(String.valueOf(ie.allEvents().size()), "events");
+        _data.put(String.valueOf(ie.allEvents().size()), "events2");
+        _data.put(String.valueOf(ie.allEvents().size()), "events3");
+
+
+        for (Map.Entry<String, String> entry : _data.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            // System.out.println("Clé : " + key + " | Valeur : " + value);
+
+            JPanel labelPanel = new JPanel();
+            labelPanel.setPreferredSize(new Dimension(50, 50));
+            labelPanel.setBackground(Color.BLUE);
+            labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.PAGE_AXIS));
+            
+            JLabel label = new JLabel("" + key + " " + value);
+            label.setAlignmentX(Component.CENTER_ALIGNMENT); // centrer le label
+            // label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setForeground(Color.WHITE);
+            label.setPreferredSize(new Dimension(50, 50));
+            //labelPanel.add(label, BorderLayout.CENTER);
+            labelPanel.add(label);
+            labelPanel.add(Box.createVerticalGlue()); 
+            
+
+            panel.add(labelPanel);
+        }
+
+        panel.add(new JPanel());
+    }
+
+    // supprime tous les composants de ce panel
+    public void clearPanel(JPanel panel) {
+        panel.removeAll();
+    }
 
     /**
      * @param args the command line arguments
@@ -246,15 +560,18 @@ public class DashboardForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegister;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton jfAdd;
-    private javax.swing.JButton jfList;
+    private javax.swing.JButton jfBtnAddEvent;
+    private javax.swing.JButton jfBtnAddUser;
+    private javax.swing.JButton jfBtnListEvent;
+    private javax.swing.JButton jfBtnListUser;
+    private javax.swing.JButton jfBtnLougout2;
+    private javax.swing.JButton jfBtnResume;
+    private javax.swing.JLabel jfPageTitle;
+    private javax.swing.JPanel jfPanelBox;
     private javax.swing.JTextField jfSearchBar;
     private javax.swing.JPanel panelBox;
-    private javax.swing.JLabel wfHello;
-    private javax.swing.JLabel wfWrite;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,7 +5,13 @@
 package main;
 
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
@@ -38,5 +44,20 @@ public class Layout<T> {
         combo.setModel(model);
     }
     
+    public String formatDate(String dateStr) {
+        String formattedDate = dateStr;
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+            SimpleDateFormat outputFormat = new SimpleDateFormat("'Lun' dd MMMM yyyy 'à' HH'h'mm 'GMT'", Locale.FRENCH);
+
+            Date date = inputFormat.parse(dateStr);
+            formattedDate = outputFormat.format(date);
+
+        } catch (ParseException ex) {
+
+            Logger.getLogger(DashboardForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return formattedDate;
+    }
     
 }
