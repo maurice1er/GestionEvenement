@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/windows/RegisterForm.java</file>
             <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/utils/EntityManagerUtil.java</file>
             <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/windows/LoginForm.java</file>
             <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/daos/IUtilisateur.java</file>
             <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/services/UtilisateurService.java</file>
