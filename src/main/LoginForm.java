@@ -45,7 +45,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         email_txt = new javax.swing.JTextField();
         password_txt = new javax.swing.JPasswordField();
-        btn_txt = new javax.swing.JButton();
+        connexion_btn = new javax.swing.JButton();
         panelBox = new javax.swing.JPanel();
         jfSearchBar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -64,11 +64,11 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel2.setText("PASSWORD");
 
-        btn_txt.setBackground(new java.awt.Color(102, 255, 0));
-        btn_txt.setText("CONNECTER");
-        btn_txt.addActionListener(new java.awt.event.ActionListener() {
+        connexion_btn.setBackground(new java.awt.Color(102, 255, 0));
+        connexion_btn.setText("CONNECTER");
+        connexion_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_txtActionPerformed(evt);
+                connexion_btnActionPerformed(evt);
             }
         });
 
@@ -194,7 +194,7 @@ public class LoginForm extends javax.swing.JFrame {
                                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(103, 103, 103)
-                                .addComponent(btn_txt)))
+                                .addComponent(connexion_btn)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(83, Short.MAX_VALUE))
@@ -219,14 +219,14 @@ public class LoginForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(password_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
-                        .addComponent(btn_txt)))
+                        .addComponent(connexion_btn)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_txtActionPerformed
+    private void connexion_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexion_btnActionPerformed
         try {
 
             String email = email_txt.getText();
@@ -249,10 +249,11 @@ public class LoginForm extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "connection echouee");
             }
+            
         } catch (Exception ex) {
             Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
         }        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_txtActionPerformed
+    }//GEN-LAST:event_connexion_btnActionPerformed
 
     private void jfSearchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfSearchBarActionPerformed
         // TODO add your handling code here:
@@ -315,7 +316,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JButton btnCreateEvent;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegister;
-    private javax.swing.JButton btn_txt;
+    private javax.swing.JButton connexion_btn;
     private javax.swing.JTextField email_txt;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
