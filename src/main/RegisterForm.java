@@ -328,12 +328,44 @@ public class RegisterForm extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "Bien inserer");
 
+            String[] indicatifs = {"77", "78", "70", "76", "75", "72"};
+            List<String> listeindicatifs = Arrays.asList(indicatifs);
+            //verifie si le numero est de 9 caracteres.
+            if (telephone.length() != 9) {
+                JOptionPane.showMessageDialog(this, "La longueur du numero de tel est incorrect.");
+                return;
+            }
+            if (nom.length() < 2) {
+                JOptionPane.showMessageDialog(this, "Le nom doit etre superieur super a 2 lettre !", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (prenom.length() < 2) {
+                JOptionPane.showMessageDialog(this, "Le prenom doit etre superieur a 2!", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+                        if (password.length() < 4) {
+                JOptionPane.showMessageDialog(this, "Le mot de passe doit contenir plus de 3 caracteres !", "Input Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //verifie le debut du numero
+            if (!listeindicatifs.contains(telephone.substring(0, 2))) {
+                JOptionPane.showMessageDialog(this, "Indicatif de numero telephone incorrect.");
+                return;
+            }
+
+            //Verifie si l'email n'est pas inferier a 9 caracteres.
+            if (email.length() < 9) {
+                JOptionPane.showMessageDialog(this, "L'Email est trop court.");
+                return;
+            }
+                    clearFied();
+
+
         } catch (Exception e) {
- 
-                   JOptionPane.showMessageDialog(this, "Email ou  numero de telephone existe deja");
-         
-            
-            
+
+            JOptionPane.showMessageDialog(this, "Email ou  numero de telephone existe deja");
+
             // Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, e);
 //            if (e instanceof SQLIntegrityConstraintViolationException) {
 //                System.out.println("Integrity constraint violation: " + e.getMessage());
@@ -346,9 +378,7 @@ public class RegisterForm extends javax.swing.JFrame {
 //            }
             return;
         }
-
-        String[] indicatifs = {"77", "78", "70", "76", "75", "72"};
-        List<String> listeindicatifs = Arrays.asList(indicatifs);
+        ;
         // Redirect to login
         LoginForm lf = new LoginForm();
         lf.setVisible(true);
@@ -410,6 +440,14 @@ public class RegisterForm extends javax.swing.JFrame {
                 new RegisterForm().setVisible(true);
             }
         });
+    }
+     private void clearFied() {
+        prenom_txt.setText("");
+        nom_txt.setText("");
+        tel_txt.setText("");
+        email_txt.setText("");
+        password_txt.setText("");
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
