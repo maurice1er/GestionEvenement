@@ -7,7 +7,12 @@ package main;
 import daos.IUtilisateur;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +33,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
     public RegisterForm() {
         initComponents();
-          Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         pack();
         setSize(screenSize.width, screenSize.height);
         for (Utilisateurs u : iu.allUsers()) {
@@ -303,20 +308,45 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_email_txtActionPerformed
 
     private void inscrire_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscrire_btnActionPerformed
-  try {
+        try {
+            int id = 0;
             String prenom = prenom_txt.getText();
             String nom = nom_txt.getText();
             String telephone = tel_txt.getText();
             String email = email_txt.getText();
             char[] passwordChars = password_txt.getPassword();
             String password = new String(passwordChars);
+            String role = "user";
+            Date dateCreation = new Date();
+            Utilisateurs u = new Utilisateurs(id, nom, prenom, email, telephone, password, role, dateCreation);
 
+            Utilisateurs utilisateur = iu.addRegister(u);
+
+            if (utilisateur.getId() == null) {
+                JOptionPane.showMessageDialog(this, "Erreur lors de l'insertion");
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Bien inserer");
+
+        } catch (Exception e) {
+ 
+                   JOptionPane.showMessageDialog(this, "Email ou  numero de telephone existe deja");
          
+            
+            
+            // Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, e);
+//            if (e instanceof SQLIntegrityConstraintViolationException) {
+//                System.out.println("Integrity constraint violation: " + e.getMessage());
+//                JOptionPane.showMessageDialog(this, " Adresse email ou  telephone existe deja");
+//
+//            } else {
+//                System.out.println("SQL error: " + e.getMessage());
+//                JOptionPane.showMessageDialog(this, "Adresse email ou telephone existe deja");
+//
+//            }
+            return;
+        }
 
-
-        } catch (Exception ex) {
-            Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
-        }  
         String[] indicatifs = {"77", "78", "70", "76", "75", "72"};
         List<String> listeindicatifs = Arrays.asList(indicatifs);
         // Redirect to login
@@ -336,7 +366,7 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-      LoginForm lf = new LoginForm();
+        LoginForm lf = new LoginForm();
         lf.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:

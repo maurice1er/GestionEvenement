@@ -40,4 +40,5 @@ public interface IUtilisateur {
     Utilisateurs findUserByEmail(String email);
     
     Utilisateurs login(String email, String motDePasse);
+   Utilisateurs addRegister(Utilisateurs u);
 }
