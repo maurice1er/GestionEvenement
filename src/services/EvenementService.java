@@ -61,6 +61,7 @@ public class EvenementService implements IEvenement {
 
     @Override
     public Evenements updateEvent(int id, Evenements e) {
+        System.out.println("UpdateEvent");
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
