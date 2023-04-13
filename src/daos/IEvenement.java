@@ -18,5 +18,4 @@ public interface IEvenement {
     Evenements updateEvent(int id, Evenements e);
     void deleteEventById(int id);
     int countUserByEvenementId(int eventId);
-    
 }
