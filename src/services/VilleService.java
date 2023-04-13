@@ -98,9 +98,7 @@ public class VilleService implements IVille {
         }
         return categorieSaved;
     }
-
-    
-    
+   
     public List<Villes> getVillesByPaysId(int id){
    
         // Exécution de la requête et récupération de l'utilisateur s'il existe
@@ -126,4 +124,6 @@ public class VilleService implements IVille {
         return villes;
 
         }
+
+
 }

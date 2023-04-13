@@ -27,9 +27,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "villes")
 @NamedQueries({
-    @NamedQuery(name = "Villes.findAll", query = "SELECT v FROM Villes v"),
-    @NamedQuery(name = "Villes.findById", query = "SELECT v FROM Villes v WHERE v.id = :id"),
-    @NamedQuery(name = "Villes.findByName", query = "SELECT v FROM Villes v WHERE v.name = :name")})
+    @NamedQuery(name = "Villes.findAll", query = "SELECT v FROM Villes v")
+    , @NamedQuery(name = "Villes.findById", query = "SELECT v FROM Villes v WHERE v.id = :id")
+    , @NamedQuery(name = "Villes.findByPaysId", query = "SELECT v FROM Villes v WHERE v.paysId = :paysId")
+    , @NamedQuery(name = "Villes.findByName", query = "SELECT v FROM Villes v WHERE v.name = :name")})
 public class Villes implements Serializable {
 
     private static final long serialVersionUID = 1L;

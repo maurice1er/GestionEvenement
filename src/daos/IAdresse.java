@@ -18,5 +18,4 @@ public interface IAdresse {
     void editAdresse(Adresses adresses);
     void deleteAdresse(Adresses adresse) ;
     Adresses addAdresses(Adresses adresse);
-    
 }

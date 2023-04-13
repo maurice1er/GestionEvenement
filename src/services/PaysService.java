@@ -32,6 +32,8 @@ public class PaysService implements IPays {
         List<Pays> paysList = null;
         try {
             paysList = EM.createNamedQuery("Pays.findAll", Pays.class).getResultList();
+            System.out.println(paysList.size());
+            System.out.println(paysList);
         } catch (PersistenceException ex) {
             System.out.println("Erreur lors de la recuperation des Pays" + ex.getMessage());
         }
