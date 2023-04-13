@@ -13,6 +13,7 @@
 =======
         <group>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/models/Country.java</file>
             <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/models/City.java</file>
 =======
@@ -25,6 +26,11 @@
             <file
       >file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/models/Utilisateurs.java</file>
 >>>>>>> fc79604 (update service bamba)
+=======
+            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/daos/IPays.java</file>
+            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/daos/IAdresse.java</file>
+            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/daos/IVille.java</file>
+>>>>>>> 906bac2 (j'ai fait les taches (ajout,modif,list,suppr) sur les different class)
         </group>
 >>>>>>> ce6161e (création de models,adresse,pays et ville)
 =======

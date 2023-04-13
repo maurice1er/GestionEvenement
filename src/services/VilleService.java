@@ -98,6 +98,7 @@ public class VilleService implements IVille {
         }
         return categorieSaved;
     }
+
     
     
     public List<Villes> getVillesByPaysId(int id){
@@ -125,6 +126,4 @@ public class VilleService implements IVille {
         return villes;
 
         }
-
-    
 }
