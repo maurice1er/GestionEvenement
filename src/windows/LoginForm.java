@@ -8,41 +8,25 @@ import daos.IUtilisateur;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-<<<<<<< HEAD:src/main/LoginForm.java
-<<<<<<< HEAD
-=======
+
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
->>>>>>> e3330c4 (update branch dev)
-=======
+
 import models.Utilisateurs;
 import services.UtilisateurService;
->>>>>>> 7573d23 (gestion de l authentification du login):src/windows/LoginForm.java
 
 /**
  *
  * @author user
  */
-<<<<<<< HEAD
-=======
-
->>>>>>> e3330c4 (update branch dev)
 public class LoginForm extends javax.swing.JFrame {
-<<<<<<< HEAD:src/main/LoginForm.java
     
        Connection conn;
     PreparedStatement pst;
     ResultSet rs;
-<<<<<<< HEAD
-=======
-    
->>>>>>> e3330c4 (update branch dev)
-=======
-
     private IUtilisateur iu;
->>>>>>> 7573d23 (gestion de l authentification du login):src/windows/LoginForm.java
 
     /**
      * Creates new form LoginForm

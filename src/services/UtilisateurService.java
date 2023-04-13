@@ -145,5 +145,34 @@ public class UtilisateurService implements IUtilisateur {
         }
         return utilisateur;
     }
+     @Override
+    public Utilisateurs addRegister(Utilisateurs u) {
+        EntityTransaction et = null;
+        Utilisateurs registerSaved;
+        try {
+            // Récupération de l'objet de transaction
+            et = entityManager.getTransaction();
+            // Début de la transaction
+            et.begin();
+            // Persistance de la catégorie dans la base de données
+            entityManager.persist(u);
+            entityManager.flush();
+            // Validation de la transaction
+            et.commit();
+            // Affectation de la catégorie persistée à la variable categorieSaved
+            registerSaved = u;
+        } catch (Exception ex) {
+            // Gestion des erreurs : annulation de la transaction en cas d'échec
+            if (et != null && et.isActive()) {
+                et.rollback();
+            }
+            // Affichage d'un message d'erreur approprié
+            System.err.println("Erreur lors de l'insertion de l inscription " + ex.getMessage());
+            // Relance de l'exception pour permettre une gestion plus avancée par l'appelant
+            throw ex;
+        }
+        // Retourne la catégorie persistée
+        return registerSaved;
+    }
 
 }
