@@ -6,6 +6,11 @@ import models.Utilisateurs;
 import utils.EntityManagerUtil;
 import java.util.List;
 
+/**
+ *
+ * @author AMY
+ */
+
 public class UtilisateurService implements IUtilisateur {
 
     private EntityManager entityManager = null;

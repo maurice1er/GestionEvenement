@@ -199,6 +199,6 @@ public class Evenements implements Serializable {
         return "Evenements{" + "id=" + id + ", titre=" + titre + ", description=" + description + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", dateCreation=" + dateCreation + ", dateModification=" + dateModification + ", inscriptionsCollection=" + inscriptionsCollection + ", adresseId=" + adresseId + ", organisateurId=" + organisateurId + '}';
     }
 
-   
+
     
 }
