@@ -2,6 +2,7 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="GestionEvenementsPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>models.Utilisateur</class>
     <class>models.Utilisateurs</class>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -18,8 +19,12 @@
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gevents?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
+<<<<<<< HEAD
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 >>>>>>> f300733 (creation du models du models utilisateurs avec hibernate)
+=======
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+>>>>>>> 7573d23 (gestion de l authentification du login)
       <property name="javax.persistence.jdbc.password" value=""/>
 =======
     <class>models.Pays</class>

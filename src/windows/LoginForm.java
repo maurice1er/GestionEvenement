@@ -2,15 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package main;
+package windows;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import daos.IUtilisateur;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+<<<<<<< HEAD:src/main/LoginForm.java
 <<<<<<< HEAD
 =======
 
@@ -18,6 +16,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 >>>>>>> e3330c4 (update branch dev)
+=======
+import models.Utilisateurs;
+import services.UtilisateurService;
+>>>>>>> 7573d23 (gestion de l authentification du login):src/windows/LoginForm.java
 
 /**
  *
@@ -28,6 +30,7 @@ import javax.swing.JFrame;
 
 >>>>>>> e3330c4 (update branch dev)
 public class LoginForm extends javax.swing.JFrame {
+<<<<<<< HEAD:src/main/LoginForm.java
     
        Connection conn;
     PreparedStatement pst;
@@ -36,12 +39,17 @@ public class LoginForm extends javax.swing.JFrame {
 =======
     
 >>>>>>> e3330c4 (update branch dev)
+=======
+
+    private IUtilisateur iu;
+>>>>>>> 7573d23 (gestion de l authentification du login):src/windows/LoginForm.java
 
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
         initComponents();
+        iu = new UtilisateurService();
     }
 
     /**
@@ -127,33 +135,37 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_txtActionPerformed
-   try {
-            
-            pst = conn.prepareStatement("SELECT * FROM USER WHERE email =  ? and password = ? ");
+        try {
+
             String email = email_txt.getText();
-            String password = password_txt.getText(); 
-            
-            pst.setString(1, email);
-            pst.setString(2, password);
-            
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                LoginForm lf = new LoginForm();
-                lf.setVisible(true);
-                Effacer();
-                this.setVisible(false);
+            char[] passwordChars = password_txt.getPassword();
+            String password = new String(passwordChars);
+
+            System.out.println(email);
+            System.out.println(password);
+
+            Utilisateurs user = iu.login(email, password);
+
+            System.out.println(user);
+            if (user != null) {
+                JOptionPane.showMessageDialog(this, "connection etablie");
+
+//                LoginForm lf = new LoginForm();
+//                lf.setVisible(true);
+//                Effacer();
+//                this.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "connection echouee");
             }
-            else{
-                JOptionPane.showMessageDialog(this, "Email et/ou Mot de passe incorrect.");
-            }    
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(LoginForm.class.getName()).log(Level.SEVERE, null, ex);
         }        // TODO add your handling code here:
     }//GEN-LAST:event_btn_txtActionPerformed
-  private void Effacer () {
+    private void Effacer() {
         email_txt.setText("");
         password_txt.setText("");
     }
+
     /**
      * @param args the command line arguments
      */

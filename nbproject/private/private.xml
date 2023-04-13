@@ -5,6 +5,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <group/>
 =======
         <group>
@@ -20,5 +21,12 @@
             <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenements/src/main/HomeForm.java</file>
         </group>
 >>>>>>> e3330c4 (update branch dev)
+=======
+        <group>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/services/UtilisateurService.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/main/RegisterForm.java</file>
+        </group>
+>>>>>>> 7573d23 (gestion de l authentification du login)
     </open-files>
 </project-private>
