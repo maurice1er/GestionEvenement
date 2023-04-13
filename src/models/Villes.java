@@ -5,8 +5,6 @@
  */
 package models;
 
-import models.Pays;
-import models.Adresses;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -35,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Villes.findAll", query = "SELECT v FROM Villes v")
     , @NamedQuery(name = "Villes.findById", query = "SELECT v FROM Villes v WHERE v.id = :id")
+    , @NamedQuery(name = "Villes.findByPaysId", query = "SELECT v FROM Villes v WHERE v.paysId = :paysId")
     , @NamedQuery(name = "Villes.findByName", query = "SELECT v FROM Villes v WHERE v.name = :name")})
 public class Villes implements Serializable {
 
@@ -46,7 +45,7 @@ public class Villes implements Serializable {
     private Integer id;
     @Column(name = "name")
     private String name;
-    @JoinColumn(name = "pays_id", referencedColumnName = "id")
+    @JoinColumn(name = "paysId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Pays paysId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "villeId")
@@ -114,7 +113,7 @@ public class Villes implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Villes[ id=" + id + " ]";
+        return "models.Villes[ id=" + id + " ]";
     }
     
 }

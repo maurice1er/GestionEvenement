@@ -17,4 +17,5 @@ public interface IPays {
     void editPays(Pays pays);
     void deletePays(Pays pays);
     Pays addPays(Pays pays);
+    
 }

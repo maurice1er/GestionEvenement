@@ -44,9 +44,9 @@ public class Adresses implements Serializable {
     private String adresse1;
     @Column(name = "adresse2")
     private String adresse2;
-    @Column(name = "code_postal")
+    @Column(name = "codePostal")
     private String codePostal;
-    @JoinColumn(name = "ville_id", referencedColumnName = "id")
+    @JoinColumn(name = "villeId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Villes villeId;
 
@@ -119,7 +119,7 @@ public class Adresses implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Adresses[ id=" + id + " ]";
+        return "models.Adresses[ id=" + id + " ]";
     }
     
 }

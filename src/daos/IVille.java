@@ -5,10 +5,18 @@
  */
 package daos;
 
+import java.util.List;
+import models.Villes;
+
 /**
  *
  * @author bambi
  */
 public interface IVille {
+    List<Villes> Ville();
+    void editVille(Villes villes);
+    List<Villes> getVillesByPaysId(int id);
+    void deleteVilles(Villes ville);
+    Villes addVilles(Villes ville);
     
 }

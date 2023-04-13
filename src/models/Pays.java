@@ -99,7 +99,10 @@ public class Pays implements Serializable {
 
     @Override
     public String toString() {
-        return "main.Pays[ id=" + id + " ]";
+        return "Pays{" + "id=" + id + ", name=" + name + ", villesCollection=" + villesCollection + '}';
     }
+
+   
+    
     
 }

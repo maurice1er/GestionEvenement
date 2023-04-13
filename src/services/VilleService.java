@@ -10,8 +10,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import models.Adresses;
 import models.Villes;
 
@@ -96,6 +98,32 @@ public class VilleService implements IVille {
         }
         return categorieSaved;
     }
+   
+    public List<Villes> getVillesByPaysId(int id){
+   
+        // Exécution de la requête et récupération de l'utilisateur s'il existe
+        List<Villes> villes = null;
+        try {
+            //Utilisateurs user = entityManager.createNamedQuery("Utilisateurs.login", Utilisateurs.class).get();
+            //TypedQuery<Utilisateurs> query = entityManager.createQuery("Utilisateurs.login", Utilisateurs.class);
+            System.out.println(id);
+
+            // TypedQuery<Villes> query = EM.createNamedQuery("Villes.findByPaysId", Villes.class);
+            TypedQuery<Villes> query = EM.createQuery("SELECT v FROM Villes v WHERE v.paysId = :paysId", Villes.class);
+            query.setParameter("paysId",id);
+
+            // Exécution de la requête et récupération de l'utilisateur s'il existe
+            /*villes = query.getResultList();
+            System.out.println("svc");
+            System.out.println(villes.size());*/
+            //return utilisateur;
+        } catch (NoResultException ex) {
+            // Si aucun utilisateur n'est trouvé avec ce nom d'utilisateur, renvoyer null
+            return null;
+        }
+        return villes;
+
+        }
 
     
 }
