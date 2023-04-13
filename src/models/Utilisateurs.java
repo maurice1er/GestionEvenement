@@ -21,7 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -29,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "utilisateurs")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Utilisateurs.login", query = "SELECT u FROM Utilisateurs u WHERE u.email = :email AND u.motDePasse = :motDePasse")
    ,@NamedQuery(name = "Utilisateurs.findAll", query = "SELECT u FROM Utilisateurs u")
