@@ -11,16 +11,31 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+<<<<<<< HEAD
+=======
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+>>>>>>> e3330c4 (update branch dev)
 
 /**
  *
  * @author user
  */
+<<<<<<< HEAD
+=======
+
+>>>>>>> e3330c4 (update branch dev)
 public class LoginForm extends javax.swing.JFrame {
     
        Connection conn;
     PreparedStatement pst;
     ResultSet rs;
+<<<<<<< HEAD
+=======
+    
+>>>>>>> e3330c4 (update branch dev)
 
     /**
      * Creates new form LoginForm
