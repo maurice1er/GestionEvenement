@@ -23,11 +23,6 @@ import services.UtilisateurService;
  */
 public class LoginForm extends javax.swing.JFrame {
     
-       Connection conn;
-    PreparedStatement pst;
-    ResultSet rs;
-    private IUtilisateur iu;
-
     /**
      * Creates new form LoginForm
      */
