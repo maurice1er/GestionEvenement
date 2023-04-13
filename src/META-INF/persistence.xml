@@ -3,6 +3,7 @@
   <persistence-unit name="GestionEvenementsPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>models.Utilisateurs</class>
+<<<<<<< HEAD
     <class>models.Pays</class>
     <class>models.Adresses</class>
     <class>models.Villes</class>
@@ -12,6 +13,12 @@
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3406/gevents?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+=======
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gevents?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+>>>>>>> f300733 (creation du models du models utilisateurs avec hibernate)
       <property name="javax.persistence.jdbc.password" value=""/>
     </properties>
   </persistence-unit>

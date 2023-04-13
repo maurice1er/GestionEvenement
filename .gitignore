@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 /build/
 /dist/
+=======
+/build/
+>>>>>>> f300733 (creation du models du models utilisateurs avec hibernate)
