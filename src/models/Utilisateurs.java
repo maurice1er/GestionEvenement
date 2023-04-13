@@ -6,8 +6,10 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -40,6 +43,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Utilisateurs.findByDateCreation", query = "SELECT u FROM Utilisateurs u WHERE u.dateCreation = :dateCreation")
     , @NamedQuery(name = "Utilisateurs.findByDateModification", query = "SELECT u FROM Utilisateurs u WHERE u.dateModification = :dateModification")})
 public class Utilisateurs implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "participantId")
+    private Collection<Inscriptions> inscriptionsCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisateurId")
+    private Collection<Evenements> evenementsCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -186,6 +194,22 @@ public class Utilisateurs implements Serializable {
     @Override
     public String toString() {
         return "models.Utilisateurs[ id=" + id + " ]";
+    }
+
+    public Collection<Inscriptions> getInscriptionsCollection() {
+        return inscriptionsCollection;
+    }
+
+    public void setInscriptionsCollection(Collection<Inscriptions> inscriptionsCollection) {
+        this.inscriptionsCollection = inscriptionsCollection;
+    }
+
+    public Collection<Evenements> getEvenementsCollection() {
+        return evenementsCollection;
+    }
+
+    public void setEvenementsCollection(Collection<Evenements> evenementsCollection) {
+        this.evenementsCollection = evenementsCollection;
     }
 
 }

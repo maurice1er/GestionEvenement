@@ -74,25 +74,6 @@ public class HomeForm extends JFrame {
         layout.loadCombo(ie.allEvents(), jfPaysCombo, "titre");
     }
 
-        panelBox = new javax.swing.JPanel();
-        jfSearchBar = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        btnRegister = new javax.swing.JButton();
-        btnLogin = new javax.swing.JButton();
-        btnCreateEvent = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jfPaysCombo = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        myJScroll = new javax.swing.JScrollPane();
-        jLabel11 = new javax.swing.JLabel();
-
 
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {

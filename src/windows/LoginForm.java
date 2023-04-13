@@ -23,6 +23,7 @@ import services.UtilisateurService;
  */
 public class LoginForm extends javax.swing.JFrame {
     
+    IUtilisateur iu = null;
     /**
      * Creates new form LoginForm
      */

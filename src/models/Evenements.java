@@ -41,7 +41,6 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Evenements.findByDateCreation", query = "SELECT e FROM Evenements e WHERE e.dateCreation = :dateCreation"),
     @NamedQuery(name = "Evenements.findByDateModification", query = "SELECT e FROM Evenements e WHERE e.dateModification = :dateModification")})
 public class Evenements implements Serializable {
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -200,6 +199,6 @@ public class Evenements implements Serializable {
         return "Evenements{" + "id=" + id + ", titre=" + titre + ", description=" + description + ", dateDebut=" + dateDebut + ", dateFin=" + dateFin + ", dateCreation=" + dateCreation + ", dateModification=" + dateModification + ", inscriptionsCollection=" + inscriptionsCollection + ", adresseId=" + adresseId + ", organisateurId=" + organisateurId + '}';
     }
 
-    
+   
     
 }
