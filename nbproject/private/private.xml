@@ -1,66 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks
-    xmlns="http://www.netbeans.org/ns/editor-bookmarks/2"
-    lastBookmarkId="0"
-  />
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/models/Country.java</file>
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/models/City.java</file>
-=======
-            <file
-      >file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/services/UtilisateurService.java</file>
-            <file
-      >file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/utils/EntityManagerUtil.java</file>
-            <file
-      >file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/META-INF/persistence.xml</file>
-            <file
-      >file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/models/Utilisateurs.java</file>
->>>>>>> fc79604 (update service bamba)
-=======
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/daos/IPays.java</file>
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/services/VilleService.java</file>
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/daos/IAdresse.java</file>
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/services/PaysService.java</file>
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/daos/IVille.java</file>
-<<<<<<< HEAD
->>>>>>> 906bac2 (j'ai fait les taches (ajout,modif,list,suppr) sur les different class)
-=======
-            <file>file:/C:/Users/bambi/OneDrive/Documents/NetBeansProjects/GestionEvenement/src/services/AdresseService.java</file>
->>>>>>> 9cc4c74 (klk o niveau de ville)
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/HomeForm.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/HomeEventList.java</file>
         </group>
->>>>>>> ce6161e (création de models,adresse,pays et ville)
-=======
-        <group/>
->>>>>>> f300733 (creation du models du models utilisateurs avec hibernate)
-=======
-        <group>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenements/src/main/HomeForm.java</file>
-        </group>
->>>>>>> e3330c4 (update branch dev)
-=======
-        <group>
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/META-INF/persistence.xml</file>
-<<<<<<< HEAD
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/windows/LoginForm.java</file>
-=======
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/utils/EntityManagerUtil.java</file>
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/main/LoginForm.java</file>
->>>>>>> d532356 (inserer les nouveaux inscrit dans la base)
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/daos/IUtilisateur.java</file>
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/services/UtilisateurService.java</file>
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/models/Utilisateurs.java</file>
-            <file>file:/C:/Users/HP/Documents/NetBeansProjects/GestionEvenement/src/main/RegisterForm.java</file>
-        </group>
->>>>>>> 7573d23 (gestion de l authentification du login)
     </open-files>
 </project-private>
