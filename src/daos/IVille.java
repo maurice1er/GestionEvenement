@@ -7,6 +7,7 @@ package daos;
 
 import java.util.List;
 import models.Villes;
+import models.Pays;
 
 /**
  *
@@ -14,8 +15,13 @@ import models.Villes;
  */
 public interface IVille {
     List<Villes> Ville();
+    
+    Villes getVilleByName(String name);
+    
     void editVille(Villes villes);
-    List<Villes> getVillesByPaysId(int id);
+    
+    List<Villes> getVillesByPaysId(int paysId);
+    
     void deleteVilles(Villes ville);
     Villes addVilles(Villes ville);
     

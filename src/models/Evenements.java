@@ -94,6 +94,16 @@ public class Evenements implements Serializable {
         this.dateCreation = dateCreation;
     }
 
+
+    public Evenements(String titre, String description, Date dateDebut, Date dateFin) {
+        // this.id = id;
+        this.titre = titre;
+        this.description = description;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.dateCreation = new Date();
+    }
+
     public Integer getId() {
         return id;
     }

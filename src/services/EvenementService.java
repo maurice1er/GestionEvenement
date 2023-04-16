@@ -7,6 +7,7 @@ package services;
 import daos.IEvenement;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -40,8 +41,36 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public Evenements addEvent(Evenements p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Evenements addEvent(Evenements e) {
+        EntityTransaction et = null;
+        Evenements registerSaved;
+        try {
+            // Récupération de l'objet de transaction
+            et = entityManager.getTransaction();
+            // Début de la transaction
+            et.begin();
+            // Persistance de la catégorie dans la base de données
+            entityManager.persist(e);
+            entityManager.flush();
+            // Validation de la transaction
+            et.commit();
+            // Affectation de la catégorie persistée à la variable categorieSaved
+            registerSaved = e;
+            
+            System.out.println("Evenement ajouté avec succès");
+            System.out.println(e);
+        } catch (Exception ex) {
+            // Gestion des erreurs : annulation de la transaction en cas d'échec
+            if (et != null && et.isActive()) {
+                et.rollback();
+            }
+            // Affichage d'un message d'erreur approprié
+            System.err.println("Erreur lors de l'insertion de l inscription " + ex.getMessage());
+            // Relance de l'exception pour permettre une gestion plus avancée par l'appelant
+            throw ex;
+        }
+        // Retourne la catégorie persistée
+        return registerSaved;
     }
 
     @Override
@@ -60,9 +89,53 @@ public class EvenementService implements IEvenement {
     }
 
     @Override
-    public Evenements updateEvent(int id, Evenements e) {
+    public Evenements getEventById(int id) {
+        System.out.println("Model GetEventByEvent");
+        Evenements event = null;
+        try {
+            TypedQuery<Evenements> query = entityManager.createNamedQuery("Evenements.findById", Evenements.class);
+            query.setParameter("id", id);
+            
+            event = query.getSingleResult();          
+        } catch (PersistenceException ex) {
+            System.err.println("Erreur lors de la récupération de l'events " + ex.getMessage());
+            throw ex;
+        }
+        return event;
+    }
+
+    @Override
+    public Evenements updateEvent(Evenements e) {
         System.out.println("UpdateEvent");
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        EntityTransaction et = null;
+        Evenements registerSaved;
+        try {
+            // Récupération de l'objet de transaction
+            et = entityManager.getTransaction();
+            // Début de la transaction
+            et.begin();
+            // Persistance de la catégorie dans la base de données
+            entityManager.persist(e);
+            entityManager.flush();
+            // Validation de la transaction
+            et.commit();
+            // Affectation de la catégorie persistée à la variable categorieSaved
+            registerSaved = e;
+            
+            System.out.println("Evenement modifié avec succès");
+            System.out.println(e);
+        } catch (Exception ex) {
+            // Gestion des erreurs : annulation de la transaction en cas d'échec
+            if (et != null && et.isActive()) {
+                et.rollback();
+            }
+            // Affichage d'un message d'erreur approprié
+            System.err.println("Erreur lors de l'insertion de la modification " + ex.getMessage());
+            // Relance de l'exception pour permettre une gestion plus avancée par l'appelant
+            throw ex;
+        }
+        // Retourne la catégorie persistée
+        return registerSaved;
     }
 
     @Override

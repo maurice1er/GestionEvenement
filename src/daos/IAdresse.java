@@ -13,7 +13,6 @@ import models.Adresses;
  * @author bambi
  */
 public interface IAdresse {
-    
     List<Adresses> AllAdresse();
     void editAdresse(Adresses adresses);
     void deleteAdresse(Adresses adresse) ;

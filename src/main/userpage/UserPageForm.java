@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package main;
+package main.userpage;
 
 import daos.IEvenement;
 import java.awt.BorderLayout;
@@ -37,6 +37,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import main.HomeForm;
+import main.Layout;
+import main.RegisterForm;
 import models.Evenements;
 import models.Utilisateurs;
 import services.EvenementService;
@@ -45,10 +48,10 @@ import services.EvenementService;
  *
  * @author user
  */
-public class DashboardForm extends javax.swing.JFrame {
+public class UserPageForm extends javax.swing.JFrame {
 
     // public String myUserFullName;
-    public Utilisateurs userInfo;
+    public Utilisateurs userInfo = null;
     
     private Layout _layout = new Layout();
     IEvenement ie = new EvenementService();
@@ -59,9 +62,7 @@ public class DashboardForm extends javax.swing.JFrame {
     /**
      * Creates new form DashboardForm
      */
-    
-    /*
-    public DashboardForm() {
+    public UserPageForm() {
         // initComponents();
         
         // set the title and other properties of the JFrame
@@ -80,15 +81,11 @@ public class DashboardForm extends javax.swing.JFrame {
         System.out.println(userInfo);
         
         System.out.println("Role= " + jLabelUserRole.getText());
+        /*System.out.println("Dashboard: - " + myUserFullName);
+        jLabelUsername.setText("Hello, " + myUserFullName);*/
    }
-    */
-    public DashboardForm() {
-        initComponents();
-        setUserInfo(userInfo);
-    }
     
-    public DashboardForm(Utilisateurs user) {
-        this.userInfo = user;
+    public UserPageForm(Utilisateurs user) {
         initComponents();
         
         setTitle("Events - Dashboard");
@@ -110,10 +107,8 @@ public class DashboardForm extends javax.swing.JFrame {
             rf.setVisible(true);
         }
         
-        // setUserInfo(user); //
-        System.out.println(userInfo);
-        jLabelUsername.setText(user.getPrenom() + " " + user.getNom());
-        jLabelUserRole.setText(user.getRole());
+        setUserInfo(user);
+        //System.out.println(userInfo);
     }
     
     public void setUserInfo(Utilisateurs user) {
@@ -124,14 +119,9 @@ public class DashboardForm extends javax.swing.JFrame {
         
         jLabelUserRole.setText(user.getRole());
         userInfo = user;
-        System.out.println(jLabelUserRole.getText().toString().toLowerCase());
+        
         if(jLabelUserRole.getText().toString().toLowerCase() != "admin"){
-            this.setVisible(false);
-            RegisterForm rf = new RegisterForm();
-            rf.setVisible(true);
-            
-            LoginForm lf = new LoginForm();
-            lf.setVisible(true);
+            invalidUser();
         }
     }
     
@@ -460,7 +450,8 @@ public class DashboardForm extends javax.swing.JFrame {
 
             HashMap<String, List> data = new HashMap<>();
             data.put("events", ie.allEvents());
-            
+
+
             setResumeTable(data, myPanel);
             jfBtnListEvent.setEnabled(true);
         }
@@ -562,7 +553,7 @@ public class DashboardForm extends javax.swing.JFrame {
         // set border
         panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
         panel.setLayout(new GridLayout(0, 4, 10, 10));
-        
+
         // add stats value
         HashMap<String, String> _data = new HashMap<>();
         _data.put(ie.getEventByTitle("Foire agricole").getOrganisateurId().getTelephone(), "phone");
@@ -602,7 +593,6 @@ public class DashboardForm extends javax.swing.JFrame {
         panel.removeAll();
     }
     
-    
     /**
      * @param args the command line arguments
      */
@@ -620,24 +610,24 @@ public class DashboardForm extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DashboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DashboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DashboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DashboardForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DashboardForm().setVisible(true);
+                new UserPageForm().setVisible(true);
             }
         });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;

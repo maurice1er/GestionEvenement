@@ -13,9 +13,10 @@ import models.Evenements;
  */
 public interface IEvenement {
     List<Evenements> allEvents();
+    Evenements getEventById(int id);
     Evenements addEvent(Evenements p);
     Evenements getEventByTitle(String title);
-    Evenements updateEvent(int id, Evenements e);
+    Evenements updateEvent(Evenements e);
     void deleteEventById(int id);
     int countUserByEvenementId(int eventId);
 }

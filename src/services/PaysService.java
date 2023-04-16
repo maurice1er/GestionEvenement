@@ -10,10 +10,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 import models.Adresses;
 import models.Pays;
+import models.Villes;
 
 /**
  *
@@ -99,6 +102,22 @@ public class PaysService implements IPays {
 
 
 
+    public Pays getPaysByName(String name){
+        Pays pays = null;
+        try {
+            System.out.println(name);
 
+            TypedQuery<Pays> query = EM.createNamedQuery("Pays.findByName", Pays.class);
+            query.setParameter("name",name);
+
+            // Exécution de la requête et récupération de l'utilisateur s'il existe
+            pays = query.getSingleResult();
+            
+        } catch (NoResultException ex) {
+            // Si aucun utilisateur n'est trouvé avec ce nom d'utilisateur, renvoyer null
+            return null;
+        }
+        return pays;
+    }
     
 }

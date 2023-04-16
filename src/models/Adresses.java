@@ -129,7 +129,10 @@ public class Adresses implements Serializable {
 
     @Override
     public String toString() {
-        return "models.Adresses[ id=" + id + " ]";
+        return "Adresses{" + "id=" + id + ", adresse1=" + adresse1 + ", adresse2=" + adresse2 + ", codePostal=" + codePostal + ", villeId=" + villeId + '}';
     }
+
+    
+    
     
 }

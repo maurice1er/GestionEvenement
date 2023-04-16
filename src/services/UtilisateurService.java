@@ -10,7 +10,6 @@ import java.util.List;
  *
  * @author AMY
  */
-
 public class UtilisateurService implements IUtilisateur {
 
     private EntityManager entityManager = null;
@@ -86,24 +85,44 @@ public class UtilisateurService implements IUtilisateur {
     }
 // Mettre à jour un utilisateur dans la base de données
 
-    @Override
-    public void editUser(Utilisateurs utilisateur) {
-        EntityTransaction transaction = entityManager.getTransaction();
+    public void editUser(Utilisateurs u) {
+        EntityTransaction et = null;
+        Utilisateurs registerSaved;
+
         try {
-            // Début de la transaction
-            transaction.begin();
-            // Mettre à jour l'utilisateur dans la base de données
-            entityManager.merge(utilisateur);
-            // Validation de la transaction
-            transaction.commit();
-        } catch (Exception ex) {
-            // Gestion des erreurs : annulation de la transaction en cas d'échec
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
+            et = entityManager.getTransaction();
+            et.begin();
+
+            TypedQuery<Utilisateurs> query = entityManager.createQuery("SELECT u FROM Utilisateurs u WHERE u.id = :id", Utilisateurs.class);
+            query.setParameter("id", u.getId());
+            Utilisateurs existingUser = query.getSingleResult();
+            
+            
+            System.out.println("utilisateur trouvé");
+            System.out.println(existingUser);
+            
+            if (existingUser != null) {
+                // Si l'utilisateur existe, mettre à jour ses informations
+                existingUser.setNom(u.getNom());
+                existingUser.setPrenom(u.getPrenom());
+                existingUser.setEmail(u.getEmail());
+                entityManager.merge(existingUser);
+                registerSaved = existingUser;
+            } else {
+                // Sinon, insérer le nouvel utilisateur
+                entityManager.persist(u);
+                entityManager.flush();
+                registerSaved = u;
             }
-            // Affichage d'un message d'erreur approprié
-            System.err.println("Erreur lors de la mise à jour de l'utilisateur : " + ex.getMessage());
-            // Relance de l'exception pour permettre une gestion plus avancée par l'appelant
+
+            et.commit();
+            System.out.println("Utilisateur modifié avec succès");
+            System.out.println(registerSaved);
+        } catch (Exception ex) {
+            if (et != null && et.isActive()) {
+                et.rollback();
+            }
+            System.err.println("Erreur lors de l'insertion de la modification " + ex.getMessage());
             throw ex;
         }
     }
@@ -139,7 +158,7 @@ public class UtilisateurService implements IUtilisateur {
             // Passage du paramètre à la requête
             query.setParameter("email", email);
             query.setParameter("motDePasse", motDePasse);
-            System.out.println(query);
+            //System.out.println(query);
 
             // Exécution de la requête et récupération de l'utilisateur s'il existe
             utilisateur = query.getSingleResult();
@@ -150,7 +169,8 @@ public class UtilisateurService implements IUtilisateur {
         }
         return utilisateur;
     }
-     @Override
+
+    @Override
     public Utilisateurs addRegister(Utilisateurs u) {
         EntityTransaction et = null;
         Utilisateurs registerSaved;
@@ -178,6 +198,21 @@ public class UtilisateurService implements IUtilisateur {
         }
         // Retourne la catégorie persistée
         return registerSaved;
+    }
+
+    public Utilisateurs findUserById(int id) {
+        System.out.println("Model GetUserById");
+
+        Utilisateurs user = null;
+        try {
+            TypedQuery<Utilisateurs> query = entityManager.createNamedQuery("Utilisateurs.findById", Utilisateurs.class);
+            query.setParameter("id", id);
+            user = query.getSingleResult();
+        } catch (PersistenceException ex) {
+            System.err.println("Erreur lors de la récupération de l'events " + ex.getMessage());
+            throw ex;
+        }
+        return user;
     }
 
 }

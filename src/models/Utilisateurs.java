@@ -1,15 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,35 +14,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
  *
- * @author HP
+ * @author user
  */
 @Entity
 @Table(name = "utilisateurs")
 @NamedQueries({
-    @NamedQuery(name = "Utilisateurs.login", query = "SELECT u FROM Utilisateurs u WHERE u.email = :email AND u.motDePasse = :motDePasse")
-   ,@NamedQuery(name = "Utilisateurs.findAll", query = "SELECT u FROM Utilisateurs u")
-    , @NamedQuery(name = "Utilisateurs.findById", query = "SELECT u FROM Utilisateurs u WHERE u.id = :id")
-    , @NamedQuery(name = "Utilisateurs.findByNom", query = "SELECT u FROM Utilisateurs u WHERE u.nom = :nom")
-    , @NamedQuery(name = "Utilisateurs.findByPrenom", query = "SELECT u FROM Utilisateurs u WHERE u.prenom = :prenom")
-    , @NamedQuery(name = "Utilisateurs.findByEmail", query = "SELECT u FROM Utilisateurs u WHERE u.email = :email")
-    , @NamedQuery(name = "Utilisateurs.findByTelephone", query = "SELECT u FROM Utilisateurs u WHERE u.telephone = :telephone")
-    , @NamedQuery(name = "Utilisateurs.findByMotDePasse", query = "SELECT u FROM Utilisateurs u WHERE u.motDePasse = :motDePasse")
-    , @NamedQuery(name = "Utilisateurs.findByRole", query = "SELECT u FROM Utilisateurs u WHERE u.role = :role")
-    , @NamedQuery(name = "Utilisateurs.findByDateCreation", query = "SELECT u FROM Utilisateurs u WHERE u.dateCreation = :dateCreation")
-    , @NamedQuery(name = "Utilisateurs.findByDateModification", query = "SELECT u FROM Utilisateurs u WHERE u.dateModification = :dateModification")})
+    @NamedQuery(name = "Utilisateurs.login", query = "SELECT u FROM Utilisateurs u WHERE u.email = :email AND u.motDePasse = :motDePasse"),
+    @NamedQuery(name = "Utilisateurs.findAll", query = "SELECT u FROM Utilisateurs u"),
+    @NamedQuery(name = "Utilisateurs.findById", query = "SELECT u FROM Utilisateurs u WHERE u.id = :id"),
+    @NamedQuery(name = "Utilisateurs.findByNom", query = "SELECT u FROM Utilisateurs u WHERE u.nom = :nom"),
+    @NamedQuery(name = "Utilisateurs.findByPrenom", query = "SELECT u FROM Utilisateurs u WHERE u.prenom = :prenom"),
+    @NamedQuery(name = "Utilisateurs.findByEmail", query = "SELECT u FROM Utilisateurs u WHERE u.email = :email"),
+    @NamedQuery(name = "Utilisateurs.findByTelephone", query = "SELECT u FROM Utilisateurs u WHERE u.telephone = :telephone"),
+    @NamedQuery(name = "Utilisateurs.findByMotDePasse", query = "SELECT u FROM Utilisateurs u WHERE u.motDePasse = :motDePasse"),
+    @NamedQuery(name = "Utilisateurs.findByRole", query = "SELECT u FROM Utilisateurs u WHERE u.role = :role"),
+    @NamedQuery(name = "Utilisateurs.findByDateCreation", query = "SELECT u FROM Utilisateurs u WHERE u.dateCreation = :dateCreation"),
+    @NamedQuery(name = "Utilisateurs.findByDateModification", query = "SELECT u FROM Utilisateurs u WHERE u.dateModification = :dateModification"),
+    @NamedQuery(name = "Utilisateurs.findByActive", query = "SELECT u FROM Utilisateurs u WHERE u.active = :active")})
 public class Utilisateurs implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "participantId")
-    private Collection<Inscriptions> inscriptionsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "organisateurId")
-    private Collection<Evenements> evenementsCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -78,6 +70,9 @@ public class Utilisateurs implements Serializable {
     @Column(name = "dateModification")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateModification;
+    @Basic(optional = false)
+    @Column(name = "active")
+    private boolean active;
 
     public Utilisateurs() {
     }
@@ -95,6 +90,7 @@ public class Utilisateurs implements Serializable {
         this.motDePasse = motDePasse;
         this.role = role;
         this.dateCreation = dateCreation;
+        this.active = false;
     }
 
     public Integer getId() {
@@ -169,6 +165,14 @@ public class Utilisateurs implements Serializable {
         this.dateModification = dateModification;
     }
 
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -193,21 +197,5 @@ public class Utilisateurs implements Serializable {
     public String toString() {
         return "models.Utilisateurs[ id=" + id + " ]";
     }
-
-    public Collection<Inscriptions> getInscriptionsCollection() {
-        return inscriptionsCollection;
-    }
-
-    public void setInscriptionsCollection(Collection<Inscriptions> inscriptionsCollection) {
-        this.inscriptionsCollection = inscriptionsCollection;
-    }
-
-    public Collection<Evenements> getEvenementsCollection() {
-        return evenementsCollection;
-    }
-
-    public void setEvenementsCollection(Collection<Evenements> evenementsCollection) {
-        this.evenementsCollection = evenementsCollection;
-    }
-
+    
 }

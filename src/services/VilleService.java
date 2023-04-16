@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import models.Adresses;
+import models.Pays;
 import models.Villes;
 
 /**
@@ -22,7 +23,8 @@ import models.Villes;
  * @author bambi
  */
 public class VilleService implements IVille {
-     private EntityManagerFactory EMF = null;
+
+    private EntityManagerFactory EMF = null;
     private EntityManager EM = null;
 
     public VilleService() {
@@ -63,20 +65,21 @@ public class VilleService implements IVille {
     }
 
     public void deleteVilles(Villes ville) {
-    EntityTransaction transaction = null;
-    try {
-        transaction = EM.getTransaction();
-        transaction.begin();
-        EM.remove(EM.merge(ville));
-        transaction.commit();
-    } catch (Exception ex) {
-        if (transaction != null && transaction.isActive()) {
-            transaction.rollback();
+        EntityTransaction transaction = null;
+        try {
+            transaction = EM.getTransaction();
+            transaction.begin();
+            EM.remove(EM.merge(ville));
+            transaction.commit();
+        } catch (Exception ex) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            System.err.println("Erreur lors de la suppression de Ville : " + ex.getMessage());
+            throw ex;
         }
-        System.err.println("Erreur lors de la suppression de Ville : " + ex.getMessage());
-        throw ex;
     }
-}
+
     public Villes addVilles(Villes ville) {
         EntityTransaction et = null;
         Villes categorieSaved;
@@ -98,32 +101,36 @@ public class VilleService implements IVille {
         }
         return categorieSaved;
     }
-   
-    public List<Villes> getVillesByPaysId(int id){
-   
-        // Exécution de la requête et récupération de l'utilisateur s'il existe
+
+    public List<Villes> getVillesByPaysId(int paysId) {
         List<Villes> villes = null;
         try {
-            //Utilisateurs user = entityManager.createNamedQuery("Utilisateurs.login", Utilisateurs.class).get();
-            //TypedQuery<Utilisateurs> query = entityManager.createQuery("Utilisateurs.login", Utilisateurs.class);
-            System.out.println(id);
-
-            // TypedQuery<Villes> query = EM.createNamedQuery("Villes.findByPaysId", Villes.class);
-            TypedQuery<Villes> query = EM.createQuery("SELECT v FROM Villes v WHERE v.paysId = :paysId", Villes.class);
-            query.setParameter("paysId",id);
-
-            // Exécution de la requête et récupération de l'utilisateur s'il existe
-            /*villes = query.getResultList();
-            System.out.println("svc");
-            System.out.println(villes.size());*/
-            //return utilisateur;
+            TypedQuery<Villes> query = EM.createQuery("SELECT v FROM Villes v WHERE v.paysId.id = :paysId", Villes.class);
+            query.setParameter("paysId", paysId);
+            villes = query.getResultList();
         } catch (NoResultException ex) {
             // Si aucun utilisateur n'est trouvé avec ce nom d'utilisateur, renvoyer null
             return null;
         }
         return villes;
+    }
 
+    public Villes getVilleByName(String name) {
+        Villes ville = null;
+        try {
+            System.out.println(name);
+
+            TypedQuery<Villes> query = EM.createNamedQuery("Villes.findByName", Villes.class);
+            query.setParameter("name", name);
+
+            // Exécution de la requête et récupération de l'utilisateur s'il existe
+            ville = query.getSingleResult();
+
+        } catch (NoResultException ex) {
+            // Si aucun utilisateur n'est trouvé avec ce nom d'utilisateur, renvoyer null
+            return null;
         }
-
+        return ville;
+    }
 
 }

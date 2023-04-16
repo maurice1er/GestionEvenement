@@ -4,12 +4,14 @@
  */
 package main;
 
+import main.userpage.UserPageForm;
 import daos.IUtilisateur;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import main.adminpage.DashResumeForm;
 import models.Utilisateurs;
 import services.UtilisateurService;
 
@@ -63,6 +65,15 @@ public class LoginForm extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel2.setText("PASSWORD");
+
+        email_txt.setText("fatou.diop@example.com");
+
+        password_txt.setText("passer@123");
+        password_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                password_txtActionPerformed(evt);
+            }
+        });
 
         connexion_btn.setBackground(new java.awt.Color(102, 255, 0));
         connexion_btn.setText("CONNECTER");
@@ -161,7 +172,7 @@ public class LoginForm extends javax.swing.JFrame {
                         .addComponent(btnCreateEvent)
                         .addComponent(jButton2))
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
@@ -202,7 +213,7 @@ public class LoginForm extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelBox, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(49, 49, 49)
@@ -228,24 +239,33 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void connexion_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connexion_btnActionPerformed
         try {
-
             String email = email_txt.getText();
             char[] passwordChars = password_txt.getPassword();
             String password = new String(passwordChars);
 
-            System.out.println(email);
-            System.out.println(password);
-
             Utilisateurs user = iu.login(email, password);
-
-            System.out.println(user);
+            
             if (user != null) {
-                JOptionPane.showMessageDialog(this, "connection etablie");
-
-//                LoginForm lf = new LoginForm();
-//                lf.setVisible(true);
-//                Effacer();
-//                this.setVisible(false);
+                Effacer();
+                
+                if(user.getRole().contains("admin")){
+                    System.out.println("Admin page");
+                    DashResumeForm dash = new DashResumeForm(user);
+                    
+                    dash.setVisible(true); 
+                    dash.userInfo = user;
+                    dash.jLabelUsername.setText(user.getPrenom() + " " + user.getNom());
+                    dash.jLabelUserRole.setText(user.getRole());
+                }else{
+                    System.out.println("User page");
+                    UserPageForm up = new UserPageForm();
+                    
+                    up.setVisible(true); 
+                    up.userInfo = user;
+                    up.jLabelUsername.setText(user.getPrenom() + " " + user.getNom());
+                    up.jLabelUserRole.setText(user.getRole());
+                }
+                this.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "connection echouee");
             }
@@ -272,6 +292,10 @@ public class LoginForm extends javax.swing.JFrame {
     private void btnCreateEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateEventActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCreateEventActionPerformed
+
+    private void password_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_password_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_password_txtActionPerformed
     private void Effacer() {
         email_txt.setText("");
         password_txt.setText("");

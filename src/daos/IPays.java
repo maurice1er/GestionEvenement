@@ -18,4 +18,6 @@ public interface IPays {
     void deletePays(Pays pays);
     Pays addPays(Pays pays);
     
+    Pays getPaysByName(String name);
+    
 }

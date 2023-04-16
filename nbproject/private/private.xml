@@ -3,8 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/HomeForm.java</file>
-            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/HomeEventList.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/AdminAddEvent.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/adminpage/DashResumeForm.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/LoginForm.java</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/GestionEvenement/src/main/DashboardForm.java</file>
         </group>
     </open-files>
 </project-private>
