@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -22,22 +24,22 @@ import javax.swing.JComboBox;
  * @author user
  */
 public class Layout<T> {
-     
+
     /*
         Layout<Personne> layout = new Layout<>();
         layout.setComboValue(personnes, combo, "nom");
-    */
+     */
     public void loadCombo(List<T> listT, JComboBox<String> combo, String attribut) {
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        
+
         model.addElement("---");
-        
+
         for (T t : listT) {
             try {
                 Field field = t.getClass().getDeclaredField(attribut);
                 field.setAccessible(true);
                 Object value = field.get(t);
-                
+
                 model.addElement(value.toString());
             } catch (NoSuchFieldException | IllegalAccessException ex) {
                 System.err.println("Erreur : impossible d'accéder à l'attribut " + attribut + " de l'objet " + t);
@@ -45,7 +47,7 @@ public class Layout<T> {
         }
         combo.setModel(model);
     }
-    
+
     public String formatDate(String dateStr) {
         String formattedDate = dateStr;
         try {
@@ -61,6 +63,18 @@ public class Layout<T> {
         }
         return formattedDate;
     }
-    
-    
+
+    public boolean minNChar(String value, int nChar) {
+        if (value.length() >= nChar) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isValidEmail(String email) {
+        Pattern pattern = Pattern.compile("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+
 }

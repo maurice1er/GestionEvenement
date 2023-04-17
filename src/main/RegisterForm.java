@@ -30,6 +30,8 @@ public class RegisterForm extends javax.swing.JFrame {
      * Creates new form InscriptionForm
      */
     IUtilisateur iu = new UtilisateurService();
+    
+    private Layout _layout = new Layout();
 
     public RegisterForm() {
         initComponents();
@@ -318,6 +320,33 @@ public class RegisterForm extends javax.swing.JFrame {
             String password = new String(passwordChars);
             String role = "user";
             Date dateCreation = new Date();
+            
+            if(_layout.minNChar(prenom.toString(), 2) == false){
+                JOptionPane.showMessageDialog(null, "Le prenom doit etre >= 2 caracteres");
+                return;
+            }
+            if(_layout.minNChar(nom.toString(), 2) == false){
+                JOptionPane.showMessageDialog(null, "Le nom doit etre >= 2 caracteres");
+                return;
+            }
+            
+            if(
+                (telephone.startsWith("+22177") == false) || (telephone.startsWith("77") == false) ||
+                (telephone.startsWith("+22178") == false) || (telephone.startsWith("78") == false)||
+                (telephone.startsWith("+22176") == false) || (telephone.startsWith("76") == false)||
+                (telephone.startsWith("+22170") == false) || (telephone.startsWith("70") == false)||
+                (telephone.startsWith("+22175") == false) || (telephone.startsWith("75") == false)
+            ){
+                JOptionPane.showMessageDialog(null, "Le format du telephone est incorrect (ex: 77xxx ou +22177xx)");
+                return;
+            }
+            
+            
+            if(_layout.minNChar(password.toString(), 8) == false){
+                JOptionPane.showMessageDialog(null, "Le password etre >= 8 caracteres");
+                return;
+            }
+            
             Utilisateurs u = new Utilisateurs(id, nom, prenom, email, telephone, password, role, dateCreation);
 
             Utilisateurs utilisateur = iu.addRegister(u);

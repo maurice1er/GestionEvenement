@@ -67,9 +67,6 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel2.setText("PASSWORD");
 
-        email_txt.setText("fatou.diop@example.com");
-
-        password_txt.setText("passer@123");
         password_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 password_txtActionPerformed(evt);
