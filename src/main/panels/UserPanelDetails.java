@@ -72,7 +72,7 @@ public class UserPanelDetails extends javax.swing.JPanel {
         jfUserNom.setText(u.getNom());
         jfUserEmail.setText(u.getEmail());
         jfUserTelephone.setText(u.getTelephone());
-        jfUserPassword.setText(u.getEmail());
+        jfUserPassword.setText(u.getMotDePasse());
         jfUserRole.setSelectedItem(u.getRole());
 
         boolean isActif = (u.getActive() == true) ? true : false;

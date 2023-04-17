@@ -52,7 +52,9 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
         if(organisateurId != userId){
             jfBtnSupprimer.setVisible(false);
             jfBtnModifier.setVisible(false);
-            jfBtnInscrire.setVisible(true);
+            if(ii.subscriptionAlreadyExist(event, userInfo) == false){
+                jfBtnInscrire.setVisible(true);
+            }
         }else{
             jfBtnInscrire.setVisible(false);
             jfBtnSupprimer.setVisible(true);

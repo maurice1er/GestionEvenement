@@ -8,6 +8,7 @@ import daos.IInscription;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import models.Evenements;
 import models.Inscriptions;
 import models.Utilisateurs;
@@ -27,7 +28,6 @@ public class InscriptionService implements IInscription {
     public void inscrireParticipant(Evenements evenement, Utilisateurs participant) {
         EntityTransaction et = null;
         Evenements registerSaved;
-        
         try {
             entityManager.getTransaction().begin();
             
@@ -46,5 +46,31 @@ public class InscriptionService implements IInscription {
             // emf.close();
             System.out.println("s'inscrire à un event");
         }
+    }
+
+    public boolean subscriptionAlreadyExist(Evenements evenement, Utilisateurs participant) {
+        Inscriptions inscriptions = null;
+        EntityTransaction tx = entityManager.getTransaction();
+
+        try {
+            tx.begin();
+            TypedQuery<Inscriptions> query = entityManager.createQuery("SELECT i FROM Inscriptions i WHERE i.evenementId = :evenementId AND i.participantId = :participantId", Inscriptions.class);
+
+            // Passage du paramètre à la requête
+            query.setParameter("evenementId", evenement);
+            query.setParameter("participantId", participant);
+            
+            inscriptions = query.getSingleResult();
+            tx.commit();
+        } catch (Exception ex) {
+            if (tx.isActive()) {
+                tx.rollback();
+            }
+            ex.printStackTrace();
+        } finally {
+            System.out.println("s'inscrire à un event");
+        }
+        System.out.println(inscriptions);
+        return (inscriptions == null) ? false : true;
     }
 }

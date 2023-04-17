@@ -97,7 +97,6 @@ public class UtilisateurService implements IUtilisateur {
             query.setParameter("id", u.getId());
             Utilisateurs existingUser = query.getSingleResult();
             
-            
             System.out.println("utilisateur trouvé");
             System.out.println(existingUser);
             
@@ -106,6 +105,10 @@ public class UtilisateurService implements IUtilisateur {
                 existingUser.setNom(u.getNom());
                 existingUser.setPrenom(u.getPrenom());
                 existingUser.setEmail(u.getEmail());
+                existingUser.setTelephone(u.getTelephone());
+                existingUser.setActive(u.getActive());
+                existingUser.setMotDePasse(u.getMotDePasse());
+                existingUser.setRole(u.getRole());
                 entityManager.merge(existingUser);
                 registerSaved = existingUser;
             } else {

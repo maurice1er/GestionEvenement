@@ -13,4 +13,5 @@ import models.Utilisateurs;
  */
 public interface IInscription {
     void inscrireParticipant(Evenements evenement, Utilisateurs participant);
+    boolean subscriptionAlreadyExist(Evenements evenement, Utilisateurs participant);
 }

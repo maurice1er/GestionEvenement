@@ -39,6 +39,8 @@ public class EvenementService implements IEvenement {
         // Retour de la liste de tous les produits
         return evenementList;
     }
+    
+    
 
     @Override
     public Evenements addEvent(Evenements e) {
@@ -56,7 +58,7 @@ public class EvenementService implements IEvenement {
             et.commit();
             // Affectation de la catégorie persistée à la variable categorieSaved
             registerSaved = e;
-            
+
             System.out.println("Evenement ajouté avec succès");
             System.out.println(e);
         } catch (Exception ex) {
@@ -79,8 +81,8 @@ public class EvenementService implements IEvenement {
         try {
             TypedQuery<Evenements> query = entityManager.createNamedQuery("Evenements.findByTitre", Evenements.class);
             query.setParameter("titre", title);
-            
-            events = query.getSingleResult();          
+
+            events = query.getSingleResult();
         } catch (PersistenceException ex) {
             System.err.println("Erreur lors de la récupération de l'events " + ex.getMessage());
             throw ex;
@@ -95,8 +97,8 @@ public class EvenementService implements IEvenement {
         try {
             TypedQuery<Evenements> query = entityManager.createNamedQuery("Evenements.findById", Evenements.class);
             query.setParameter("id", id);
-            
-            event = query.getSingleResult();          
+
+            event = query.getSingleResult();
         } catch (PersistenceException ex) {
             System.err.println("Erreur lors de la récupération de l'events " + ex.getMessage());
             throw ex;
@@ -121,7 +123,7 @@ public class EvenementService implements IEvenement {
             et.commit();
             // Affectation de la catégorie persistée à la variable categorieSaved
             registerSaved = e;
-            
+
             System.out.println("Evenement modifié avec succès");
             System.out.println(e);
         } catch (Exception ex) {
@@ -149,9 +151,13 @@ public class EvenementService implements IEvenement {
         try {
             TypedQuery<Long> query = entityManager.createNamedQuery("Evenements.countUserByEventId", Long.class);
             query.setParameter("eventId", eventId);
-            
-            Long _nbInscrit = query.getSingleResult();
-            nbInscrit = _nbInscrit.intValue();            
+
+            //  Long _nbInscrit = query.getSingleResult();
+            //  nbInscrit = _nbInscrit.intValue();   
+            List<Long> results = query.getResultList();
+            if (!results.isEmpty()) {
+                nbInscrit = results.get(0).intValue();
+            }
         } catch (PersistenceException ex) {
             System.err.println("Erreur lors de la récupération des produits " + ex.getMessage());
             throw ex;
@@ -160,4 +166,3 @@ public class EvenementService implements IEvenement {
         return nbInscrit;
     }
 }
-

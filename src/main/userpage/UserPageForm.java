@@ -364,7 +364,7 @@ public class UserPageForm extends javax.swing.JFrame {
         if (jfBtnAddEvent.isEnabled() == true) {
             jfBtnAddEvent.setEnabled(false);
             //jfBtnAddEvent.setBackground(Color.decode("#a3a693 "));
-
+            
             jfBtnMyAccount.setEnabled(true);
             jfBtnListEvent.setEnabled(true);
         }
@@ -393,7 +393,7 @@ public class UserPageForm extends javax.swing.JFrame {
         handlePanelBoxContent(jfPageTitle, "MY ACCOUNT", jfPanelBox);
         if (jfBtnMyAccount.isEnabled() == true) {
             jfBtnMyAccount.setEnabled(false);
-            jfBtnMyAccount.setBackground(Color.decode("#a3a693 "));
+            // jfBtnMyAccount.setBackground(Color.decode("#a3a693 "));
 
             jfBtnAddEvent.setEnabled(true);
             jfBtnListEvent.setEnabled(true);
