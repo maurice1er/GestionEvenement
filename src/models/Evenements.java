@@ -31,7 +31,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "evenements")
 @NamedQueries({
-    // @NamedQuery(name = "Evenements.countUserByEventId", query = "SELECT COUNT(i.id) as nbInscrit FROM Evenements e JOIN Inscriptions i ON i.evenementId = e.id WHERE e.id = :eventId GROUP BY e.id"),
+    @NamedQuery(name = "Evenements.findAllByVille", query = "SELECT e FROM Evenements e WHERE e.adresseId.villeId.name = :ville"),
     @NamedQuery(name = "Evenements.countUserByEventId", query = "SELECT COUNT(i.id) AS nbInscrits FROM Evenements e JOIN e.inscriptionsCollection i WHERE e.id = :eventId GROUP BY e.id"),
     @NamedQuery(name = "Evenements.findAll", query = "SELECT e FROM Evenements e"),
     @NamedQuery(name = "Evenements.findById", query = "SELECT e FROM Evenements e WHERE e.id = :id"),

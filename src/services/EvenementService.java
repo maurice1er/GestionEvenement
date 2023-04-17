@@ -39,6 +39,25 @@ public class EvenementService implements IEvenement {
         // Retour de la liste de tous les produits
         return evenementList;
     }
+
+    @Override
+    public List<Evenements> allEventsByVille(String ville) {
+        List<Evenements> evenementList;
+
+        try {
+            //evenementList = entityManager.createNamedQuery("Evenements.findAllByVille", Evenements.class);
+        
+            TypedQuery<Evenements> query = entityManager.createNamedQuery("Evenements.findAllByVille", Evenements.class);
+            query.setParameter("ville", ville);
+
+            evenementList = query.getResultList();
+        } catch (PersistenceException ex) {
+            System.err.println("Erreur lors de la récupération des produits " + ex.getMessage());
+            throw ex;
+        }
+        // Retour de la liste de tous les produits
+        return evenementList;
+    }
     
     
 

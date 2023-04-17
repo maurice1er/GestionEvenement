@@ -19,4 +19,5 @@ public interface IEvenement {
     Evenements updateEvent(Evenements e);
     void deleteEventById(int id);
     int countUserByEvenementId(int eventId);
+    List<Evenements> allEventsByVille(String ville);
 }

@@ -368,6 +368,15 @@ public class HomeForm extends JFrame {
 
     private void jfVilleComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfVilleComboActionPerformed
         // TODO add your handling code here:
+        
+        String _ville = jfVilleCombo.getSelectedItem().toString();
+        
+        if(_ville == "---"){
+            afficherEvenements(evenements, 4);
+        }else{
+            evenements = ie.allEventsByVille(_ville);
+            afficherEvenements(evenements, 4);
+        }
     }//GEN-LAST:event_jfVilleComboActionPerformed
 
   // close windows and open another
@@ -430,6 +439,7 @@ public class HomeForm extends JFrame {
   JPanel panel = new JPanel();
 
   public void afficherEvenements(List<Evenements> evenements, int nbColumn) {
+      panel.removeAll();
     panel.setLayout(new GridLayout(0, nbColumn, 20, 10));
     panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
 
