@@ -77,7 +77,7 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
 
         boolean isActif = (u.getActive() == true) ? true : false;
 
-        jfUserActif.setSelected(isActif);
+        // jfUserActif.setSelected(isActif);
 
         SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 
@@ -117,8 +117,6 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
         jfUserRole = new javax.swing.JComboBox<>();
         jScrollPane5 = new javax.swing.JScrollPane();
         jfUserPassword = new javax.swing.JTextPane();
-        jfUserActif = new javax.swing.JCheckBox();
-        jLabel7 = new javax.swing.JLabel();
         jfBtnModifier = new javax.swing.JButton();
 
         jLabel1.setText("Prenom");
@@ -145,14 +143,6 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
 
         jScrollPane5.setViewportView(jfUserPassword);
 
-        jfUserActif.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jfUserActifActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("Compte actif ?");
-
         jfBtnModifier.setText("Modifier");
         jfBtnModifier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,10 +166,6 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
                             .addComponent(jfBtnModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jfUserActif)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel7))
                             .addComponent(jLabel5)
                             .addComponent(jLabel3)
                             .addComponent(jLabel1)
@@ -222,20 +208,12 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jfUserActif))))
-                .addGap(8, 8, 8)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
                 .addComponent(jfBtnModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(144, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jfUserActifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfUserActifActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jfUserActifActionPerformed
 
     private void jfBtnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnModifierActionPerformed
         // TODO add your handling code here:
@@ -255,7 +233,7 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
             String _telephone = jfUserTelephone.getText();
             String _password = jfUserPassword.getText();
             String _role = jfUserRole.getSelectedItem().toString();
-            boolean _actif = jfUserActif.isSelected();
+            // boolean _actif = jfUserActif.isSelected();
 
             user.setPrenom(_prenom);
             user.setNom(_nom);
@@ -265,7 +243,7 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
             user.setDateCreation(new Date());
             user.setRole(_role);
             
-            user.setActive(_actif);
+            // user.setActive(_actif);
 
             iu.editUser(user);
             JOptionPane.showMessageDialog(null, "Ustilisateur Modifié");
@@ -279,14 +257,12 @@ public class UserPanelUserDetails extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton jfBtnModifier;
-    private javax.swing.JCheckBox jfUserActif;
     private javax.swing.JTextPane jfUserEmail;
     private javax.swing.JTextPane jfUserNom;
     private javax.swing.JTextPane jfUserPassword;

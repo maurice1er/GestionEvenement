@@ -4,7 +4,7 @@
  */
 package main;
 
-import main.userpage.UserPageForm;
+import main.userpage.DashUserPageForm;
 import daos.IUtilisateur;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import main.adminpage.DashResumeForm;
+import main.userpage.UserPageForm;
 import models.Utilisateurs;
 import services.UtilisateurService;
 
@@ -66,9 +67,9 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel2.setText("PASSWORD");
 
-        email_txt.setText("fatou.diop@example.com");
+        email_txt.setText("omar.sow@example.com");
 
-        password_txt.setText("passer@123");
+        password_txt.setText("passer@1");
         password_txt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 password_txtActionPerformed(evt);
@@ -258,7 +259,7 @@ public class LoginForm extends javax.swing.JFrame {
                     dash.jLabelUserRole.setText(user.getRole());
                 }else{
                     System.out.println("User page");
-                    UserPageForm up = new UserPageForm();
+                    UserPageForm up = new UserPageForm(user);
                     
                     up.setVisible(true); 
                     up.userInfo = user;

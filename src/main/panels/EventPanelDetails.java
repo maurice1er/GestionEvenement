@@ -289,7 +289,7 @@ public class EventPanelDetails extends javax.swing.JPanel {
         jfEventPays.setEditable(true);
         jfEventPays.setEnabled(true);
         
-        event.setTitre(jfEventTitle.getText());
+        //event.setTitre(jfEventTitle.getText());
         
         updateEvent();
         jfBtnModifier.setText("Mettre à jour");

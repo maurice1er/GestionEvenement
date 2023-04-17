@@ -4,10 +4,7 @@
  */
 package main.userpage;
 
-import main.adminpage.*;
-import main.*;
 import daos.IEvenement;
-import daos.IUtilisateur;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -16,8 +13,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,38 +37,32 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import main.panels.EventPanelAdd;
-import main.panels.EventPanelDetails;
-import main.panels.UserPanelAdd;
-import main.panels.UserPanelDetails;
+import main.HomeForm;
+import main.Layout;
+import main.RegisterForm;
 import models.Evenements;
 import models.Utilisateurs;
 import services.EvenementService;
-import services.UtilisateurService;
 
 /**
  *
  * @author user
  */
-public class UserPage extends javax.swing.JFrame {
+public class DashUserPageForm extends javax.swing.JFrame {
 
     // public String myUserFullName;
-    public Utilisateurs userInfo;
+    public Utilisateurs userInfo = null;
     
-    private int singleEventId = -1;
-    private int singleUserId = -1;
-
     private Layout _layout = new Layout();
-    public IEvenement ie;
-    public IUtilisateur iu;
+    IEvenement ie = new EvenementService();
+    // IUtilisateur ie = new UtilisateurService();
 
     HashMap<String, List<List>> _data = new HashMap<>();
 
     /**
      * Creates new form DashboardForm
      */
-    /*
-    public DashboardForm() {
+    public DashUserPageForm() {
         // initComponents();
         
         // set the title and other properties of the JFrame
@@ -92,66 +81,51 @@ public class UserPage extends javax.swing.JFrame {
         System.out.println(userInfo);
         
         System.out.println("Role= " + jLabelUserRole.getText());
+        /*System.out.println("Dashboard: - " + myUserFullName);
+        jLabelUsername.setText("Hello, " + myUserFullName);*/
    }
-     */
-    public UserPage() {
+    
+    public DashUserPageForm(Utilisateurs user) {
         initComponents();
-        setUserInfo(userInfo);
-        ie = new EvenementService();
-        iu = new UtilisateurService();
-    }
-
-    public UserPage(Utilisateurs user) {
-        this.userInfo = user;
-        initComponents();
-        ie = new EvenementService();
-        iu = new UtilisateurService();
         
         setTitle("Events - Dashboard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         pack();
         setSize(screenSize.width, screenSize.height);
-
+        
         System.out.println("Dashboard with constructor..");
-
+        
         handlePanelBoxContent(jfPageTitle, "RESUME", jfPanelBox);
         if (jfBtnResume.isEnabled() == true) {
             jfBtnResume.setEnabled(false);
         }
         
-        /*if(user.getRole() == "user"){
+        if(user.getRole() == "user"){
             this.setVisible(false);
             RegisterForm rf = new RegisterForm();
             rf.setVisible(true);
-        }*/
+        }
         
         setUserInfo(user);
-        
-        System.out.println(userInfo);
-        jLabelUsername.setText(user.getPrenom() + " " + user.getNom());
-        jLabelUserRole.setText(user.getRole());
+        //System.out.println(userInfo);
     }
-
+    
     public void setUserInfo(Utilisateurs user) {
-
+        
         if(user == null){
             invalidUser();
         }
         
+        jLabelUserRole.setText(user.getRole());
         userInfo = user;
         
-        /*if(jLabelUserRole.getText().toString().toLowerCase() != "admin"){
-            this.setVisible(false);
-            RegisterForm rf = new RegisterForm();
-            rf.setVisible(true);
-            
-            LoginForm lf = new LoginForm();
-            lf.setVisible(true);
-        }*/
+        if(jLabelUserRole.getText().toString().toLowerCase() != "admin"){
+            invalidUser();
+        }
     }
-
-    public void invalidUser() {
+    
+    public void invalidUser(){
         this.setVisible(false);
         RegisterForm rf = new RegisterForm();
         rf.setVisible(true);
@@ -168,6 +142,8 @@ public class UserPage extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jfPageTitle = new javax.swing.JLabel();
+        jfBtnListEvent = new javax.swing.JButton();
+        jfBtnAddEvent = new javax.swing.JButton();
         panelBox = new javax.swing.JPanel();
         jfSearchBar = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -175,10 +151,7 @@ public class UserPage extends javax.swing.JFrame {
         jLabelUsername = new javax.swing.JLabel();
         jLabelUserRole = new javax.swing.JLabel();
         jfPanelBox = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jfBtnResume = new javax.swing.JButton();
-        jfBtnAddEvent = new javax.swing.JButton();
-        jfBtnListEvent = new javax.swing.JButton();
         jfBtnListUser = new javax.swing.JButton();
         jfBtnAddUser = new javax.swing.JButton();
         jfBtnLougout2 = new javax.swing.JButton();
@@ -205,6 +178,20 @@ public class UserPage extends javax.swing.JFrame {
                 .addComponent(jfPageTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jfBtnListEvent.setText("LIST EVENTS");
+        jfBtnListEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfBtnListEventActionPerformed(evt);
+            }
+        });
+
+        jfBtnAddEvent.setText("ADD EVENT");
+        jfBtnAddEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfBtnAddEventActionPerformed(evt);
+            }
+        });
 
         jfSearchBar.setText("  Créer un évenement");
         jfSearchBar.setToolTipText("");
@@ -285,20 +272,6 @@ public class UserPage extends javax.swing.JFrame {
             }
         });
 
-        jfBtnAddEvent.setText("ADD EVENT");
-        jfBtnAddEvent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jfBtnAddEventActionPerformed(evt);
-            }
-        });
-
-        jfBtnListEvent.setText("LIST EVENTS");
-        jfBtnListEvent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jfBtnListEventActionPerformed(evt);
-            }
-        });
-
         jfBtnListUser.setText("LIST USERS");
         jfBtnListUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,37 +293,6 @@ public class UserPage extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jfBtnLougout2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jfBtnResume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jfBtnAddEvent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jfBtnListEvent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jfBtnListUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jfBtnAddUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(26, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jfBtnResume)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jfBtnAddEvent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jfBtnListEvent)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jfBtnListUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jfBtnAddUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jfBtnLougout2))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -359,9 +301,15 @@ public class UserPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(72, 72, 72)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jfBtnLougout2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jfBtnResume, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jfBtnAddEvent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jfBtnListEvent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jfBtnListUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jfBtnAddUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jfPanelBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -372,13 +320,24 @@ public class UserPage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(panelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jfBtnResume)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfBtnAddEvent)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfBtnListEvent)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfBtnListUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jfBtnAddUser))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jfPanelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(204, Short.MAX_VALUE))
+                        .addComponent(jfPanelBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addComponent(jfBtnLougout2)
+                .addGap(45, 45, 45))
         );
 
         pack();
@@ -386,7 +345,6 @@ public class UserPage extends javax.swing.JFrame {
 
     private void jfBtnListEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnListEventActionPerformed
         // TODO add your handling code here:
-        ie = new EvenementService();
         handlePanelBoxContent(jfPageTitle, "LIST EVENTS", jfPanelBox);
         if (jfBtnListEvent.isEnabled() == true) {
             jfBtnListEvent.setEnabled(false);
@@ -411,7 +369,7 @@ public class UserPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jfBtnAddEventActionPerformed
 
-
+    
     private void jfSearchBarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfSearchBarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jfSearchBarActionPerformed
@@ -450,7 +408,6 @@ public class UserPage extends javax.swing.JFrame {
 
     private void jfBtnListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnListUserActionPerformed
         // TODO add your handling code here:
-        iu = new UtilisateurService();
         handlePanelBoxContent(jfPageTitle, "LIST USERS", jfPanelBox);
         if (jfBtnListUser.isEnabled() == true) {
             jfBtnListUser.setEnabled(false);
@@ -464,7 +421,6 @@ public class UserPage extends javax.swing.JFrame {
 
     private void jfBtnLougout2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnLougout2ActionPerformed
         // TODO add your handling code here:
-        userInfo = null;
         this.setVisible(false);
         new HomeForm().setVisible(true);
     }//GEN-LAST:event_jfBtnLougout2ActionPerformed
@@ -474,96 +430,36 @@ public class UserPage extends javax.swing.JFrame {
         jLabel.setText(message);
 
         String labelValue = jLabel.getText();
-        
+        // System.out.println(labelValue);
+
         if (labelValue.contains("ADD") && labelValue.contains("EVENT")) {
-            
             System.out.println("Add event");
-            EventPanelAdd addE = new EventPanelAdd();
-            addE.userInfo = userInfo;
-            myPanel.removeAll();
-            myPanel.add(addE);
-            myPanel.revalidate();
-            myPanel.repaint();
-            
         } else if (labelValue.contains("ADD") && labelValue.contains("USER")) {
             System.out.println("Add user");
-            UserPanelAdd addU = new UserPanelAdd();
-                    
-                    
-            myPanel.removeAll();
-            myPanel.add(addU);
-            myPanel.revalidate();
-            myPanel.repaint();
-            
         } else if (labelValue.contains("LIST") && labelValue.contains("EVENTS")) {
             System.out.println("List events");
             List<Evenements> events = ie.allEvents();
             setEventsTable(events, myPanel);
-            jTable.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() == 2) { // Si l'utilisateur a double-cliqué
-                        JTable target = (JTable) e.getSource();
-                        int row = target.getSelectedRow();
-                        int column = target.getSelectedColumn();
-                        Object value = target.getValueAt(row, column);
-                        Object eventId = target.getValueAt(row, 0);
-                        // Récupération des éléments de la ligne sélectionnée
-                        /*System.out.println("Selected row: " + row);
-                        System.out.println("Selected column: " + column);
-                        System.out.println("Selected value: " + value);*/
-                        System.out.println("Selected Event Id: " + eventId);
-                        singleEventId = (int) eventId;
-                        
-                        EventPanelDetails eventDetails = new EventPanelDetails(singleEventId);
-                        myPanel.removeAll();
-                        jfPageTitle.setText("Event Details");
-                        myPanel.add(eventDetails);
-                        myPanel.revalidate();
-                        myPanel.repaint();
-                    }
-                }
-            });
 
         } else if (labelValue.contains("LIST") && labelValue.contains("USERS")) {
             System.out.println("List users");
-            List<Utilisateurs> users = iu.allUsers(); // = iu.allUsers;
+            List<Utilisateurs> users = null; // = iu.allUsers;
             setUsersTable(users, myPanel);
-            jTable.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    if (e.getClickCount() == 2) { // Si l'utilisateur a double-cliqué
-                        JTable target = (JTable) e.getSource();
-                        int row = target.getSelectedRow();
-                        int column = target.getSelectedColumn();
-                        Object value = target.getValueAt(row, column);
-                        Object userId = target.getValueAt(row, 0);
-                        System.out.println("Selected User Id: " + userId);
-                        singleUserId = (int) userId;
-                        
-                        UserPanelDetails eventDetails = new UserPanelDetails(singleUserId);
-                        myPanel.removeAll();
-                        jfPageTitle.setText("User Details");
-                        myPanel.add(eventDetails);
-                        myPanel.revalidate();
-                        myPanel.repaint();
-                    }
-                }
-            });
-        } else 
-        {
+        } else {
             System.out.println("RESUME dash");
 
             HashMap<String, List> data = new HashMap<>();
             data.put("events", ie.allEvents());
+
 
             setResumeTable(data, myPanel);
             jfBtnListEvent.setEnabled(true);
         }
     }
 
-
-    JTable jTable = new JTable();
     public void setEventsTable(List<Evenements> events, JPanel panel) {
         clearPanel(panel);
+        JTable jTable = new JTable();
 
         panel.setLayout(new GridLayout(1, 1, 20, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
@@ -596,27 +492,28 @@ public class UserPage extends javax.swing.JFrame {
 
                 data.add(row);
             }
-            
         }
 
         // DefaultTableModel tableModel = new DefaultTableModel(data, columns);
         DefaultTableModel tableModel = new DefaultTableModel(data, columns);
-        tableModel.fireTableDataChanged();
         jTable.setModel(tableModel);
-
 
         // Désactiver l'édition de toutes les cellules
         jTable.setDefaultEditor(Object.class, null);
-        
+
         JScrollPane jScrollPane = new JScrollPane(jTable);
         panel.add(jScrollPane);
+        //panel.add(jTable);
     }
 
     public void setUsersTable(List<Utilisateurs> users, JPanel panel) {
         clearPanel(panel);
+        JTable jTable = new JTable();
 
         panel.setLayout(new GridLayout(1, 1, 20, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
+        //Color bgColor = new Color((int) (Math.random() * 0x1000000));
+        //panel.setBackground(bgColor);
 
         Vector<String> columns = new Vector<String>();
         columns.add("Id");
@@ -625,8 +522,6 @@ public class UserPage extends javax.swing.JFrame {
         columns.add("Email");
         columns.add("Téléphone");
         columns.add("Date d'inscription");
-        columns.add("Active");
-        columns.add("Role");
 
         Vector<Vector<Object>> data = new Vector<Vector<Object>>();
 
@@ -639,27 +534,22 @@ public class UserPage extends javax.swing.JFrame {
                 row.add(user.getPrenom());
                 row.add(user.getEmail());
                 row.add(user.getTelephone());
-                row.add(_layout.formatDate(user.getDateCreation().toString()));
-                row.add(user.getActive());
-                row.add(user.getRole());
+                row.add(user.getDateCreation());
                 data.add(row);
             }
         }
 
         DefaultTableModel tableModel = new DefaultTableModel(data, columns);
-        tableModel.fireTableDataChanged();
         jTable.setModel(tableModel);
 
-        // Désactiver l'édition de toutes les cellules
-        jTable.setDefaultEditor(Object.class, null);
-        
         JScrollPane jScrollPane = new JScrollPane(jTable);
         panel.add(jScrollPane);
+        //panel.add(jTable);
     }
 
     public void setResumeTable(HashMap<String, List> data, JPanel panel) {
         clearPanel(panel); // clear panel
-
+        
         // set border
         panel.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
         panel.setLayout(new GridLayout(0, 4, 10, 10));
@@ -671,6 +561,7 @@ public class UserPage extends javax.swing.JFrame {
         _data.put(String.valueOf(ie.allEvents().size()), "events2");
         _data.put(String.valueOf(ie.allEvents().size()), "events3");
 
+
         for (Map.Entry<String, String> entry : _data.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -680,7 +571,7 @@ public class UserPage extends javax.swing.JFrame {
             labelPanel.setPreferredSize(new Dimension(50, 50));
             labelPanel.setBackground(Color.BLUE);
             labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.PAGE_AXIS));
-
+            
             JLabel label = new JLabel("" + key + " " + value);
             label.setAlignmentX(Component.CENTER_ALIGNMENT); // centrer le label
             // label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -688,7 +579,8 @@ public class UserPage extends javax.swing.JFrame {
             label.setPreferredSize(new Dimension(50, 50));
             //labelPanel.add(label, BorderLayout.CENTER);
             labelPanel.add(label);
-            labelPanel.add(Box.createVerticalGlue());
+            labelPanel.add(Box.createVerticalGlue()); 
+            
 
             panel.add(labelPanel);
         }
@@ -700,7 +592,7 @@ public class UserPage extends javax.swing.JFrame {
     public void clearPanel(JPanel panel) {
         panel.removeAll();
     }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -718,13 +610,13 @@ public class UserPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashUserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashUserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashUserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DashUserPageForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -734,11 +626,10 @@ public class UserPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserPage().setVisible(true);
+                new DashUserPageForm().setVisible(true);
             }
         });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogout;
@@ -746,15 +637,14 @@ public class UserPage extends javax.swing.JFrame {
     public javax.swing.JLabel jLabelUserRole;
     public javax.swing.JLabel jLabelUsername;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jfBtnAddEvent;
     private javax.swing.JButton jfBtnAddUser;
     private javax.swing.JButton jfBtnListEvent;
     private javax.swing.JButton jfBtnListUser;
     private javax.swing.JButton jfBtnLougout2;
     private javax.swing.JButton jfBtnResume;
-    public javax.swing.JLabel jfPageTitle;
-    public javax.swing.JPanel jfPanelBox;
+    private javax.swing.JLabel jfPageTitle;
+    private javax.swing.JPanel jfPanelBox;
     private javax.swing.JTextField jfSearchBar;
     private javax.swing.JPanel panelBox;
     // End of variables declaration//GEN-END:variables

@@ -107,12 +107,12 @@
     </Component>
     <Component class="javax.swing.JTextField" name="email_txt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="fatou.diop@example.com"/>
+        <Property name="text" type="java.lang.String" value="omar.sow@example.com"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JPasswordField" name="password_txt">
       <Properties>
-        <Property name="text" type="java.lang.String" value="passer@123"/>
+        <Property name="text" type="java.lang.String" value="passer@1"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="password_txtActionPerformed"/>

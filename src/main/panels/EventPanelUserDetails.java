@@ -5,6 +5,7 @@
 package main.panels;
 
 import daos.IEvenement;
+import daos.IInscription;
 import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,31 +17,51 @@ import main.*;
 import javax.swing.JOptionPane;
 import main.adminpage.DashResumeForm;
 import models.Evenements;
+import models.Inscriptions;
+import models.Utilisateurs;
 import services.EvenementService;
+import services.InscriptionService;
 
 /**
  *
  * @author user
  */
 public class EventPanelUserDetails extends javax.swing.JPanel {
-
+    public Utilisateurs userInfo;
     public Evenements event;
+    
     IEvenement ie = new EvenementService();
+    IInscription ii = new InscriptionService();
 
     /**
      * Creates new form AdminAddEvent
      */
-    public EventPanelUserDetails(int id) {
+    public EventPanelUserDetails(int id, Utilisateurs user) {
         try {
             event = ie.getEventById(id);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+        userInfo = user;
         initComponents();
         setFieldsValue(event);
+        authorize(event.getOrganisateurId().getId(), userInfo.getId());
+    }
+    
+    private void authorize(int organisateurId, int userId){
+        if(organisateurId != userId){
+            jfBtnSupprimer.setVisible(false);
+            jfBtnModifier.setVisible(false);
+            jfBtnInscrire.setVisible(true);
+        }else{
+            jfBtnInscrire.setVisible(false);
+            jfBtnSupprimer.setVisible(true);
+            jfBtnModifier.setVisible(true);
+        }
     }
 
     private void setFieldsValue(Evenements e) {
+        authorize(event.getOrganisateurId().getId(), userInfo.getId());
         jfEventTitle.setText(e.getTitre());
         jfEventTitle.setEnabled(false);
         
@@ -105,13 +126,14 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
         jfEventPays = new javax.swing.JComboBox<>();
         jfEventDebut = new javax.swing.JSpinner();
         jfEventFin = new javax.swing.JSpinner();
-        jButton2 = new javax.swing.JButton();
+        jfBtnSupprimer = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jfEventDesc = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jfEventTitle = new javax.swing.JTextPane();
         jLabel8 = new javax.swing.JLabel();
         jfEventAdresse2 = new javax.swing.JTextField();
+        jfBtnInscrire = new javax.swing.JButton();
 
         jLabel1.setText("Titre");
 
@@ -150,10 +172,10 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
         jfEventFin.setModel(new javax.swing.SpinnerDateModel());
         jfEventFin.setFocusable(false);
 
-        jButton2.setText("Supprimer");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jfBtnSupprimer.setText("Supprimer");
+        jfBtnSupprimer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jfBtnSupprimerActionPerformed(evt);
             }
         });
 
@@ -168,6 +190,13 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
         jLabel8.setText("Adresse secondaire");
 
         jfEventAdresse2.setFocusable(false);
+
+        jfBtnInscrire.setText("S'inscrire");
+        jfBtnInscrire.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jfBtnInscrireActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -193,18 +222,21 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel6)
-                                .addComponent(jfEventVille, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jfEventVille, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(25, 25, 25)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jfEventPays, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jfBtnModifier, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jfEventPays, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addComponent(jfEventAdresse1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(jfEventAdresse2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jfEventAdresse2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jfBtnSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jfBtnInscrire)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jfBtnModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -256,9 +288,10 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
                             .addComponent(jfEventPays, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jfBtnModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                            .addComponent(jfBtnSupprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jfBtnInscrire, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jfBtnModifier, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -304,13 +337,19 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
         }
     }
     
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jfBtnSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnSupprimerActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jfBtnSupprimerActionPerformed
+
+    private void jfBtnInscrireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnInscrireActionPerformed
+        // TODO add your handling code here:
+        if(userInfo != null){
+            ii.inscrireParticipant(event, userInfo); 
+        }
+    }//GEN-LAST:event_jfBtnInscrireActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -321,7 +360,9 @@ public class EventPanelUserDetails extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton jfBtnInscrire;
     private javax.swing.JButton jfBtnModifier;
+    private javax.swing.JButton jfBtnSupprimer;
     private javax.swing.JTextField jfEventAdresse1;
     private javax.swing.JTextField jfEventAdresse2;
     private javax.swing.JSpinner jfEventDebut;
