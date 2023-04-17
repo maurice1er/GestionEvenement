@@ -387,6 +387,7 @@ public class DashResumeForm extends javax.swing.JFrame {
     private void jfBtnListEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnListEventActionPerformed
         // TODO add your handling code here:
         ie = new EvenementService();
+        iu = new UtilisateurService();
         handlePanelBoxContent(jfPageTitle, "LIST EVENTS", jfPanelBox);
         if (jfBtnListEvent.isEnabled() == true) {
             jfBtnListEvent.setEnabled(false);
@@ -449,7 +450,8 @@ public class DashResumeForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jfBtnResumeActionPerformed
 
     private void jfBtnListUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jfBtnListUserActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
+        ie = new EvenementService();
         iu = new UtilisateurService();
         handlePanelBoxContent(jfPageTitle, "LIST USERS", jfPanelBox);
         if (jfBtnListUser.isEnabled() == true) {

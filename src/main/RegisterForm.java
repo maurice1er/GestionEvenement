@@ -312,12 +312,12 @@ public class RegisterForm extends javax.swing.JFrame {
     private void inscrire_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscrire_btnActionPerformed
         try {
             int id = 0;
-            String prenom = prenom_txt.getText();
-            String nom = nom_txt.getText();
-            String telephone = tel_txt.getText();
-            String email = email_txt.getText();
+            String prenom = prenom_txt.getText().trim();
+            String nom = nom_txt.getText().trim();
+            String telephone = tel_txt.getText().trim();
+            String email = email_txt.getText().trim();
             char[] passwordChars = password_txt.getPassword();
-            String password = new String(passwordChars);
+            String password = new String(passwordChars).trim();
             String role = "user";
             Date dateCreation = new Date();
             
@@ -330,14 +330,14 @@ public class RegisterForm extends javax.swing.JFrame {
                 return;
             }
             
-            if(
-                (telephone.startsWith("+22177") == false) || (telephone.startsWith("77") == false) ||
-                (telephone.startsWith("+22178") == false) || (telephone.startsWith("78") == false)||
-                (telephone.startsWith("+22176") == false) || (telephone.startsWith("76") == false)||
-                (telephone.startsWith("+22170") == false) || (telephone.startsWith("70") == false)||
-                (telephone.startsWith("+22175") == false) || (telephone.startsWith("75") == false)
-            ){
-                JOptionPane.showMessageDialog(null, "Le format du telephone est incorrect (ex: 77xxx ou +22177xx)");
+            if(_layout.minNChar(telephone, 9) == false){
+                System.out.println(telephone);
+                JOptionPane.showMessageDialog(null, "Le format du telephone est incorrect 9chars(ex: 77xxx ou +22177xx)");
+                return;
+            }
+            
+            if(_layout.isValidEmail(email.toString()) == false){
+                JOptionPane.showMessageDialog(null, "Format d'email esi incorrect");
                 return;
             }
             
